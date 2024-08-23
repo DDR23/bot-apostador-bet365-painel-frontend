@@ -11,7 +11,7 @@ const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
     const savedAuthState = localStorage.getItem('isAuthenticated');
-    return savedAuthState ? JSON.parse('isAuthenticated') : false;
+    return savedAuthState ? JSON.parse(savedAuthState) : false;
   });
 
   const login = () => {

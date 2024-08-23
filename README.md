@@ -11,5 +11,5 @@ O intuito desse projeto é monstar um frontend com as configurações minimas de
 
 - npm create vite@latest
 - npm i
-- npm install @mantine/core @mantine/hooks @mantine/notifications react-router-dom socket.io-client
+- npm install @mantine/core @mantine/hooks @mantine/notifications react-router-dom socket.io-client react-hook-form
 - npm install --save-dev postcss postcss-preset-mantine postcss-simple-vars

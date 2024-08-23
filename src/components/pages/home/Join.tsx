@@ -1,29 +1,50 @@
 import { Button, Stack, TextInput } from "@mantine/core";
-import { useRef } from "react";
-import io from 'socket.io-client';
+import getSocket from "../../../utils/getSocket";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthContext";
+import { notifications } from "@mantine/notifications";
+
+interface JoinPostValues {
+  USER_NAME?: string;
+}
 
 export default function Join() {
-  const inputRef = useRef<HTMLInputElement>(null);
+  const socket = getSocket();
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const { register, handleSubmit } = useForm<JoinPostValues>();
 
-  const handleSubmit = () => {
-    const username = inputRef.current?.value;
-    if (!username?.trim()) return;
+  const submitForm: SubmitHandler<JoinPostValues> = (formData) => {
 
-    // Conectando ao servidor WebSocket
-    const socket = io('http://localhost:8080');
-
-    // Envia uma chamada pro servidor
-    socket.emit('chamada-teste', username);
-  };
+    //EMIT == REQUEST
+    const req = formData;
+    if (!req.USER_NAME?.trim()) return;
+    socket.emit('join_data_req', req);
+    
+    //ON == RESPONSE
+    socket.on('join_data_res', (res) => {
+      notifications.show({
+        title: res.msgLogin.title,
+        message: res.msgLogin.message,
+        autoClose: 5000,
+        color: 'green'
+      });
+      login();
+      navigate('/dashboard');
+    });
+  }
 
   return (
-    <Stack>
-      <TextInput
-        label='username'
-        ref={inputRef}
-        placeholder='Digite seu nome'
-      />
-      <Button onClick={handleSubmit}>Entrar</Button>
-    </Stack>
+    <form onSubmit={handleSubmit(submitForm)}>
+      <Stack>
+        <TextInput
+          {...register('USER_NAME')}
+          description='Username'
+          required
+        />
+        <Button type="submit">Entrar</Button>
+      </Stack>
+    </form>
   );
 }
