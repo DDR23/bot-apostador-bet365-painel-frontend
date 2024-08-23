@@ -7,11 +7,9 @@ import { Outlet } from 'react-router-dom';
 
 export default function App() {
   return (
-    <>
-      <MantineProvider theme={theme} defaultColorScheme='auto'>
-        <Notifications />
-        <Outlet />
-      </MantineProvider>
-    </>
+    <MantineProvider theme={theme} defaultColorScheme='auto'>
+      <Notifications />
+      <Outlet />
+    </MantineProvider>
   );
 }
