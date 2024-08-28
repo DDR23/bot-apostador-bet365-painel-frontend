@@ -1,28 +1,24 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { createBrowserRouter, Navigate, RouterProvider } from 'react-router-dom';
+import { GlobalProvider } from './contexts/GlobalContext.tsx';
 import App from './App.tsx';
-import PageHome from './pages/home/Page.tsx';
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App />,
-    children: [
-      {
-        index: true,
-        element: <PageHome />,
-      },
-      {
-        path: '/dashboard',
-        element: <>dashboard</>,
-      },
-    ],
+    element: <App />
+  },
+  {
+    path: '*',
+    element: <Navigate to="/" replace />
   }
-]);
+])
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <RouterProvider router={router} />
+    <GlobalProvider>
+      <RouterProvider router={router} />
+    </GlobalProvider>
   </StrictMode>
 );
