@@ -1,13 +1,15 @@
 import '@mantine/core/styles.css';
 import '@mantine/notifications/styles.css';
-import theme from '../theme'
 import { MantineProvider } from '@mantine/core';
+import theme from '../theme'
 import { Notifications } from '@mantine/notifications';
+import AppLayout from './components/layouts/AppLayout';
 
 export default function App() {
   return (
     <MantineProvider theme={theme} defaultColorScheme='auto'>
       <Notifications />
+      <AppLayout />
     </MantineProvider>
   );
 }
