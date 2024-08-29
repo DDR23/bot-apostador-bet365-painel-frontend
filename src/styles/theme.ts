@@ -1,10 +1,8 @@
-'use client';
-
 import { createTheme, rem } from '@mantine/core';
 
 const theme = createTheme({
   primaryColor: 'blue',
-  fontFamily: 'Alata, sans-serif',
+  fontFamily: 'Sans-serif',
   fontSizes: {
     xs: rem(12),
     sm: rem(14),
