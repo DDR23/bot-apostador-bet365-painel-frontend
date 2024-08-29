@@ -1,6 +1,7 @@
 import { Tabs } from "@mantine/core";
 import { useEffect, useState } from "react";
 import PageConfigs from "../../pages/configs/Page";
+import PageRelatorios from "../../pages/relatorios/Page";
 
 export default function AppLayout() {
   const [selectedTab, setSelectedTab] = useState<string>(() => {
@@ -25,7 +26,7 @@ export default function AppLayout() {
         <Tabs.Tab p={20} fw={700} value="jogos">Jogos</Tabs.Tab>
       </Tabs.List>
       <Tabs.Panel value="configs" style={{ flexGrow: 1 }}><PageConfigs /></Tabs.Panel>
-      <Tabs.Panel value="relatorios" style={{ flexGrow: 1 }}><>pagina da tab relatorios</></Tabs.Panel>
+      <Tabs.Panel value="relatorios" style={{ flexGrow: 1 }}><PageRelatorios /></Tabs.Panel>
       <Tabs.Panel value="jogos" style={{ flexGrow: 1 }}><>pagina da tab jogos</></Tabs.Panel>
     </Tabs>
   );
