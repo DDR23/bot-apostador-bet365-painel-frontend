@@ -50,8 +50,8 @@ export default function PageConfigs() {
 
   return (
     <>
-      <Stack h="100%" m='auto' justify="center" align="center" p={20}>
-        <Grid justify="center" pb={80}>
+      <Stack h="100%" m='auto' justify="center" align="center" px={20} py={80}>
+        <Grid justify="center">
           {rows}
           <Grid.Col span={"content"}>
             <Button variant="default" type="button" onClick={open} radius="md" w={238} h={309}>
@@ -63,7 +63,7 @@ export default function PageConfigs() {
           </Grid.Col>
         </Grid>
         <Paper pos='fixed' bottom={0} withBorder w='100vw'>
-          <Flex justify='center' gap={15} p={20}>
+          <Flex justify='center' gap={15} p={10}>
             <Button bg='green' >Iniciar todos</Button>
             <Button bg='red' >Parar todos</Button>
           </Flex>
