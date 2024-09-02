@@ -6,8 +6,10 @@ import { SchemaConfig } from "../../../../schemas/SchemaConfig";
 import { TimeInput } from "@mantine/dates";
 import { useTimePickerControls } from "../../../../utils/TimePickerControls";
 import { TypeConfig } from "../../../../types/TypeConfig";
+import GetSocket from "../../../../utils/GetSocket";
 
 export default function ModalCreateConfig() {
+  const socket = GetSocket();
   const { timeStartRef, timeFinishRef, pickerControlStart, pickerControlFinish } = useTimePickerControls();
   const { register, control, handleSubmit, formState: { errors } } = useForm<TypeConfig>({
     mode: 'onChange',
@@ -21,7 +23,7 @@ export default function ModalCreateConfig() {
   });
   
   const onSubmit = (data: TypeConfig) => {
-    console.log(data);
+    socket.emit('CONFIG_POST', (data))
   };
   
   
