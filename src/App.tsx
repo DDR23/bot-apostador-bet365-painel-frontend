@@ -4,13 +4,13 @@ import '@mantine/dates/styles.css';
 import { MantineProvider } from '@mantine/core';
 import theme from './styles/theme'
 import { Notifications } from '@mantine/notifications';
-import AppLayout from './components/layouts/AppLayout';
+import { Outlet } from 'react-router-dom';
 
 export default function App() {
   return (
     <MantineProvider theme={theme} defaultColorScheme='auto'>
       <Notifications />
-      <AppLayout />
+      <Outlet />
     </MantineProvider>
   );
 }
