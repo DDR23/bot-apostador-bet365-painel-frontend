@@ -1,7 +1,7 @@
 export interface EstrategiesTenis {
   _id?: number;
-  DIFF_SET?: number | null;
-  DIFF_POINT?: number | null;
+  DIFF_SET?: number;
+  DIFF_POINT?: number;
   MULTIP: number;
   ODD_VALUE: number;
 }
@@ -12,8 +12,8 @@ export interface TypeConfigTenis {
   PASSWORD: string;
   TIME_START: string;
   TIME_FINISH: string;
-  STOP_WIN?: number | null;
-  STOP_LOSS?: number | null;
+  STOP_WIN?: number;
+  STOP_LOSS?: number;
   ESTRATEGIES?: EstrategiesTenis[];
   STATUS?: boolean;
 }
