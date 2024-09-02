@@ -1,7 +1,7 @@
 export interface EstrategiesTenis {
   _id?: number;
-  DIFF_SET: number | null;
-  DIFF_POINT: number | null;
+  DIFF_SET?: number | null;
+  DIFF_POINT?: number | null;
   MULTIP: number;
   ODD_VALUE: number;
 }
