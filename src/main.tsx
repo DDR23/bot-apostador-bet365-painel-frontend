@@ -5,6 +5,7 @@ import { GlobalProvider } from './contexts/GlobalContext.tsx';
 import App from './App.tsx';
 import './styles/globals.css'
 import AppLayout from './components/layouts/AppLayout.tsx';
+import PageAccount from './pages/account/Page.tsx';
 
 const router = createBrowserRouter([
   {
@@ -17,7 +18,7 @@ const router = createBrowserRouter([
       },
       {
         path: '/account/:id',
-        element: <>pagina de conta por id</>
+        element: <PageAccount />
       },
       {
         path: '*',

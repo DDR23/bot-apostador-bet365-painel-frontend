@@ -21,7 +21,7 @@ export default function AppLayout() {
 
   return (
     <Tabs value={selectedTab} onChange={handleTabChange} style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
-      <Tabs.List w='100vw' justify="center" pos='fixed' style={{ backgroundColor: '#242424', zIndex: '1' }}>
+      <Tabs.List w='100vw' justify="center" pos='fixed' style={{ backgroundColor: 'Background', zIndex: '1' }}>
         <Tabs.Tab p='lg' fw={700} value="configs">Configurações</Tabs.Tab>
         <Tabs.Tab p='lg' fw={700} value="relatorios">Relatórios</Tabs.Tab>
         <Tabs.Tab p='lg' fw={700} value="jogos">Jogos</Tabs.Tab>

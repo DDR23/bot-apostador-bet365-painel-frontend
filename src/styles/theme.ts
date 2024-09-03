@@ -1,7 +1,7 @@
 import { createTheme, rem } from '@mantine/core';
 
 const theme = createTheme({
-  primaryColor: 'blue',
+  primaryColor: 'green',
   fontFamily: 'Sans-serif',
   fontSizes: {
     xs: rem(12),

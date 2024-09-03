@@ -32,12 +32,12 @@ export function CardConfigs({ config }: Props) {
           <Button variant='filled' w='7rem' color={!config.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }}>
             {!config.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
           </Button>
-          <Tooltip label='Editar configuração'>
+          <Tooltip color="dimmed" label='Editar configuração'>
             <ActionIcon component='a' href={`account/${config._id}`} variant="default" size={36}>
               <IconEdit size={20} />
             </ActionIcon>
           </Tooltip>
-          <Tooltip label='Deletar configuração'>
+          <Tooltip color="dimmed" label='Deletar configuração'>
             <ActionIcon onClick={open} variant="default" c='#e03131' size={36}>
               <IconTrash size={20} />
             </ActionIcon>

@@ -72,10 +72,10 @@ export default function PageConfigs() {
             </Button>
           </Grid.Col>
         </Grid>
-        <Paper pos='fixed' bottom={0} withBorder w='100vw'>
+        <Paper pos='fixed' bottom={0} withBorder w='100vw' style={{ backgroundColor: 'Background' }}>
           <Flex justify='center' gap='md' p='sm'>
-            <Button bg='green' >Iniciar todos</Button>
-            <Button bg='red' >Parar todos</Button>
+            <Button>Iniciar todos</Button>
+            <Button bg='red'>Parar todos</Button>
           </Flex>
         </Paper>
       </Stack>
