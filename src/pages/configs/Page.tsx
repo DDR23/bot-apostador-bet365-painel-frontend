@@ -1,23 +1,55 @@
 import { Button, Flex, Grid, Modal, Paper, Stack, Text } from "@mantine/core";
-// import { CardConfigs } from "../../components/pages/configs/CardConfigs";
 import { IconPlus } from "@tabler/icons-react";
 import { useDisclosure } from "@mantine/hooks";
 import ModalCreateConfig from "../../components/pages/configs/modals/ModalCreateConfig";
+import { useEffect, useState } from "react";
+import GetSocket from "../../utils/GetSocket";
+import { TypeConfig } from "../../types/TypeConfig";
+import { CardConfigs } from "../../components/pages/configs/CardConfigs";
 
 export default function PageConfigs() {
+  const socket = GetSocket();
   const [opened, { open, close }] = useDisclosure(false);
+  const [configs, setConfigs] = useState<TypeConfig[]>([]);
 
-  // const rows = mockCardConfigs?.map((row, index) => (
-  //   <Grid.Col key={index} span={"content"}>
-  //     <CardConfigs />
-  //   </Grid.Col>
-  // ));
+  useEffect(() => {
+    const handleConfigsUpdate = (response: { title: string, message: string, data?: TypeConfig[] }) => {
+      const { data } = response;
+      setConfigs(data || []);
+    };
+
+    const handleConfigCreated = (response: { title: string, message: string, data?: TypeConfig | TypeConfig[] }) => {
+      const { title, data } = response;
+      if (title === 'Sucesso') {
+        if (Array.isArray(data)) {
+          setConfigs(data);
+        } else if (data) {
+          setConfigs(prevConfigs => [...prevConfigs, data]);
+        }
+      }
+    };
+
+    socket.emit('CONFIG_GETALL');
+    socket.on('CONFIG_GETALL_RES', handleConfigsUpdate);
+    socket.on('CONFIG_POST_RES', handleConfigCreated);
+
+    return () => {
+      socket.off('CONFIG_GETALL_RES', handleConfigsUpdate);
+      socket.off('CONFIG_POST_RES', handleConfigCreated);
+    };
+  }, [socket]);
+
+  const rows = configs.map((config, index) => (
+    <Grid.Col key={index} span={"content"}>
+      <CardConfigs config={config} />
+    </Grid.Col>
+  ));
 
   return (
     <>
       <Stack h="100%" m='auto' justify="center" align="center" px={20} py={80}>
         <Grid justify="center">
-          {/* {rows} */}
+          {configs.length > 0 ? rows : ''}
           <Grid.Col span={"content"}>
             <Button variant="default" type="button" onClick={open} radius="md" w={238} h={309}>
               <Stack w='100%' h='100%' justify="center" align="center" gap={0}>
