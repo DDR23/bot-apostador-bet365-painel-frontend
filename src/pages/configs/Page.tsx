@@ -13,29 +13,42 @@ export default function PageConfigs() {
   const [configs, setConfigs] = useState<TypeConfig[]>([]);
 
   useEffect(() => {
-    const handleConfigsUpdate = (response: { title: string, message: string, data?: TypeConfig[] }) => {
+    const handleConfigsUpdate = (response: { data?: TypeConfig[] }) => {
       const { data } = response;
       setConfigs(data || []);
     };
 
-    const handleConfigCreated = (response: { title: string, message: string, data?: TypeConfig | TypeConfig[] }) => {
+    const handleConfigCreated = (response: { title: string, data?: TypeConfig | TypeConfig[] }) => {
       const { title, data } = response;
       if (title === 'Sucesso') {
         if (Array.isArray(data)) {
           setConfigs(data);
         } else if (data) {
-          setConfigs(prevConfigs => [...prevConfigs, data]);
+          setConfigs(prevConfigs => {
+            const updatedConfigs = prevConfigs.filter(config => config._id !== data._id);
+            return [...updatedConfigs, data];
+          });
         }
       }
+    };
+
+    const handleConfigDeleted = (response: { id: string }) => {
+      const { id } = response;
+      setConfigs(prevConfigs => {
+        const updatedConfigs = prevConfigs.filter(config => config._id !== id);
+        return updatedConfigs;
+      });
     };
 
     socket.emit('CONFIG_GETALL');
     socket.on('CONFIG_GETALL_RES', handleConfigsUpdate);
     socket.on('CONFIG_POST_RES', handleConfigCreated);
+    socket.on('CONFIG_DELETE_RES', handleConfigDeleted);
 
     return () => {
       socket.off('CONFIG_GETALL_RES', handleConfigsUpdate);
       socket.off('CONFIG_POST_RES', handleConfigCreated);
+      socket.off('CONFIG_DELETE_RES', handleConfigDeleted);
     };
   }, [socket]);
 

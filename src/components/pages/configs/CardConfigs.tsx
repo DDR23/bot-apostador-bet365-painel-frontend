@@ -24,8 +24,8 @@ export function CardConfigs({ config }: Props) {
             <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>{config.CONFIG_STRATEGIES?.length}</Text></Flex>
             <Flex align='center'><IconPlayerPlay size={20} /><Text fw={700} ml={5} inline>Início:</Text><Text inline ml={10}>{config.CONFIG_TIME_START}</Text></Flex>
             <Flex align='center'><IconPlayerPause size={20} /><Text fw={700} ml={5} inline>Final:</Text><Text inline ml={10}>{config.CONFIG_TIME_FINISH}</Text></Flex>
-            <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>entradas</Text></Flex>
-            <Flex align='center'><IconCoins size={20} /><Text fw={700} ml={5} inline>Resultado:</Text><Text inline ml={10}>result</Text></Flex>
+            <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>{config.CONFIG_ENTRIES}</Text></Flex>
+            <Flex align='center'><IconCoins size={20} /><Text fw={700} ml={5} inline>Resultado:</Text><Text inline ml={10}>{config.CONFIG_RESULT}</Text></Flex>
           </Stack>
         </Card.Section>
         <Group mt="md" gap={10}>
@@ -33,7 +33,7 @@ export function CardConfigs({ config }: Props) {
             {!config.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
           </Button>
           <Tooltip label='Editar configuração'>
-            <ActionIcon component='a' href={`account/${1}`} variant="default" size={36}>
+            <ActionIcon component='a' href={`account/${config._id}`} variant="default" size={36}>
               <IconEdit size={20} />
             </ActionIcon>
           </Tooltip>
@@ -53,7 +53,7 @@ export function CardConfigs({ config }: Props) {
           blur: 3
         }}
       >
-        <ModalDeleteConfig />
+        <ModalDeleteConfig configId={config._id} onClose={close} />
       </Modal>
     </>
   );
