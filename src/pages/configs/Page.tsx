@@ -44,7 +44,7 @@ export default function PageConfigs() {
           blur: 3
         }}
       >
-        <ModalCreateConfig />
+        <ModalCreateConfig onClose={close} />
       </Modal>
     </>
   );

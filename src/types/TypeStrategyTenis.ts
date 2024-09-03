@@ -1,9 +1,10 @@
 export interface TypeStrategyTenis {
-  _id?: number;
-  DIFF_SET?: number;
-  DIFF_POINT?: number;
-  MULTIPLIER?: number;
-  ENTRY_VALUE: number;
-  STOP_WIN?: number;
-  STOP_LOSS?: number;
+  _id?: string;
+  STRATEGY_DIFF_SET?: number;
+  STRATEGY_DIFF_POINT?: number;
+  STRATEGY_MULTIPLIER?: number;
+  STRATEGY_ENTRY_VALUE: number;
+  STRATEGY_STOP_WIN?: number;
+  STRATEGY_STOP_LOSS?: number;
+  STRATEGY_CONFIG: string;
 }
