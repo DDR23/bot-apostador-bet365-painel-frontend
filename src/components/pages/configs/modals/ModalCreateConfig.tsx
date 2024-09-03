@@ -1,5 +1,5 @@
 import { Paper, SimpleGrid, TextInput, Button, Flex } from "@mantine/core";
-import { IconCheck, IconLock, IconPlayerPause, IconPlayerPlay, IconUser, IconX } from "@tabler/icons-react";
+import { IconLock, IconPlayerPause, IconPlayerPlay, IconUser } from "@tabler/icons-react";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { SchemaConfig } from "../../../../schemas/SchemaConfig";
@@ -8,7 +8,7 @@ import { useTimePickerControls } from "../../../../utils/TimePickerControls";
 import { TypeConfig } from "../../../../types/TypeConfig";
 import GetSocket from "../../../../utils/GetSocket";
 import { useEffect, useState } from "react";
-import { notifications } from "@mantine/notifications";
+import ProviderNotification from "../../../../utils/ProviderNotification";
 
 interface Props {
   onClose: () => void;
@@ -17,7 +17,6 @@ interface Props {
 export default function ModalCreateConfig({ onClose }: Props) {
   const socket = GetSocket();
   const [isLoading, setIsLoading] = useState(false);
-  const [shouldClose, setShouldClose] = useState(false);
   const { timeStartRef, timeFinishRef, pickerControlStart, pickerControlFinish } = useTimePickerControls();
   const { register, control, handleSubmit, formState: { errors } } = useForm<TypeConfig>({
     mode: 'onChange',
@@ -31,40 +30,22 @@ export default function ModalCreateConfig({ onClose }: Props) {
   });
 
   useEffect(() => {
-    const handleResponse = (response: { title: string, message: string }) => {
-      const resTitle = response.title;
-      const resMessage = response.message;
-      const notificationColor = resTitle === 'Sucesso' ? 'green' : 'red';
-      const notificationIcon = resTitle === 'Sucesso' ? <IconCheck /> : <IconX />;
-      setIsLoading(false)
-      if (resTitle === 'Sucesso') {
-        setShouldClose(true);
-      }
-
-      notifications.show({
-        title: resTitle,
-        message: resMessage,
-        autoClose: 2000,
-        color: notificationColor,
-        icon: notificationIcon
-      });
+    const handleConfigCreated = (response: { title: string, message: string }) => {
+      const { title, message } = response;
+      ProviderNotification({ title, message });
+      if (title === 'Sucesso') onClose();
+      setIsLoading(false);
     };
-    socket.on('CONFIG_POST_RES', handleResponse)
+    
+    socket.on('CONFIG_POST_RES', handleConfigCreated);
     return () => {
-      socket.off('CONFIG_POST_RES', handleResponse);
+      socket.off('CONFIG_POST_RES', handleConfigCreated);
     };
   }, [socket]);
 
-  useEffect(() => {
-    if (shouldClose) {
-      onClose();
-    }
-  },[shouldClose, onClose]);
-
   const onSubmit = (data: TypeConfig) => {
     setIsLoading(true);
-    setShouldClose(false);
-    socket.emit('CONFIG_POST', (data));
+    socket.emit('CONFIG_POST', data);
   };
 
   return (
@@ -113,47 +94,3 @@ export default function ModalCreateConfig({ onClose }: Props) {
     </form>
   );
 }
-
-
-
-
-
-
-
-
-
-// const { fields, append, remove } = useFieldArray({
-//   control,
-//   name: "ESTRATEGIES",
-// });
-// const addStrategy = () => {
-//   append({ DIFF_SET: 0, DIFF_POINT: 0, MULTIP: 0, ODD_VALUE: 0 });
-// };
-
-
-{/* <Controller
-    name="STOP_WIN"
-    control={control}
-    render={({ field }) => (
-      <NumberInput
-        {...field}
-        placeholder="Stop Win"
-        min={0}
-        allowDecimal={false}
-        leftSection={<IconTrophy size={20} />}
-      />
-    )}
-  />
-  <Controller
-    name="STOP_LOSS"
-    control={control}
-    render={({ field }) => (
-      <NumberInput
-        {...field}
-        placeholder="Stop Loss"
-        min={0}
-        allowDecimal={false}
-        leftSection={<IconXboxX size={20} />}
-      />
-    )}
-  /> */}

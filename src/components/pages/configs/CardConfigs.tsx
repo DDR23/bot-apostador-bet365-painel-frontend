@@ -2,8 +2,13 @@ import { IconAdjustmentsHorizontal, IconCoin, IconCoins, IconEdit, IconLock, Ico
 import { Card, Text, Group, Badge, Button, ActionIcon, Flex, Stack, Tooltip, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import ModalDeleteConfig from './modals/ModalDeleteConfig';
+import { TypeConfig } from '../../../types/TypeConfig';
 
-export function CardConfigs() {
+interface Props {
+  config: TypeConfig;
+}
+
+export function CardConfigs({ config }: Props) {
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
@@ -11,21 +16,21 @@ export function CardConfigs() {
       <Card withBorder radius="md" p="md" bg='none'>
         <Card.Section withBorder p='sm'>
           <Group justify="flex-end" mb='sm'>
-            <Badge variant="dot" color={status ? 'green' : 'red'}>{status ? 'on' : 'off'}</Badge>
+            <Badge variant="dot" color={config.CONFIG_STATUS ? 'green' : 'red'}>{config.CONFIG_STATUS ? 'on' : 'off'}</Badge>
           </Group>
           <Stack gap={7}>
-            <Flex align='center'><IconUser size={20} /><Text fw={700} ml={5} inline>Usuário:</Text><Text inline ml={10}>nome</Text></Flex>
-            <Flex align='center'><IconLock size={20} /><Text fw={700} ml={5} inline>Senha:</Text><Text inline ml={10}>senha</Text></Flex>
-            <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>estrategia</Text></Flex>
-            <Flex align='center'><IconPlayerPlay size={20} /><Text fw={700} ml={5} inline>Início:</Text><Text inline ml={10}>inico</Text></Flex>
-            <Flex align='center'><IconPlayerPause size={20} /><Text fw={700} ml={5} inline>Final:</Text><Text inline ml={10}>final</Text></Flex>
+            <Flex align='center'><IconUser size={20} /><Text fw={700} ml={5} inline>Usuário:</Text><Text inline ml={10}>{config.CONFIG_USER}</Text></Flex>
+            <Flex align='center'><IconLock size={20} /><Text fw={700} ml={5} inline>Senha:</Text><Text inline ml={10}>{config.CONFIG_PASSWORD}</Text></Flex>
+            <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>{config.CONFIG_STRATEGIES?.length}</Text></Flex>
+            <Flex align='center'><IconPlayerPlay size={20} /><Text fw={700} ml={5} inline>Início:</Text><Text inline ml={10}>{config.CONFIG_TIME_START}</Text></Flex>
+            <Flex align='center'><IconPlayerPause size={20} /><Text fw={700} ml={5} inline>Final:</Text><Text inline ml={10}>{config.CONFIG_TIME_FINISH}</Text></Flex>
             <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>entradas</Text></Flex>
             <Flex align='center'><IconCoins size={20} /><Text fw={700} ml={5} inline>Resultado:</Text><Text inline ml={10}>result</Text></Flex>
           </Stack>
         </Card.Section>
         <Group mt="md" gap={10}>
-          <Button variant='filled' w='7rem' color={!status ? 'green' : 'red'} style={{ flex: 1 }}>
-            {!status ? 'Iniciar' : 'Parar'}
+          <Button variant='filled' w='7rem' color={!config.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }}>
+            {!config.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
           </Button>
           <Tooltip label='Editar configuração'>
             <ActionIcon component='a' href={`account/${1}`} variant="default" size={36}>

@@ -56,3 +56,50 @@
 //     </div>
 //   );
 // }
+
+
+
+
+
+
+
+
+
+
+
+
+// const { fields, append, remove } = useFieldArray({
+//   control,
+//   name: "ESTRATEGIES",
+// });
+// const addStrategy = () => {
+//   append({ DIFF_SET: 0, DIFF_POINT: 0, MULTIP: 0, ODD_VALUE: 0 });
+// };
+
+
+{/* <Controller
+    name="STOP_WIN"
+    control={control}
+    render={({ field }) => (
+      <NumberInput
+        {...field}
+        placeholder="Stop Win"
+        min={0}
+        allowDecimal={false}
+        leftSection={<IconTrophy size={20} />}
+      />
+    )}
+  />
+  <Controller
+    name="STOP_LOSS"
+    control={control}
+    render={({ field }) => (
+      <NumberInput
+        {...field}
+        placeholder="Stop Loss"
+        min={0}
+        allowDecimal={false}
+        leftSection={<IconXboxX size={20} />}
+      />
+    )}
+  /> */}
