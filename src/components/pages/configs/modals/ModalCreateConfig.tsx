@@ -24,8 +24,8 @@ export default function ModalCreateConfig({ onClose }: Props) {
     defaultValues: {
       CONFIG_USER: '',
       CONFIG_PASSWORD: '',
-      CONFIG_TIME_START: undefined,
-      CONFIG_TIME_FINISH: undefined,
+      CONFIG_TIME_START: '',
+      CONFIG_TIME_FINISH: '',
     },
   });
 
@@ -64,8 +64,8 @@ export default function ModalCreateConfig({ onClose }: Props) {
                 rightSection={pickerControlStart}
                 leftSection={<IconPlayerPlay size={20} />}
                 placeholder="Início"
-                value={field.value || undefined}
-                onChange={(value) => field.onChange(value || undefined)}
+                value={field.value || ''}
+                onChange={(value) => field.onChange(value || '')}
                 error={errors.CONFIG_TIME_START?.message}
               />
             )}
@@ -80,8 +80,8 @@ export default function ModalCreateConfig({ onClose }: Props) {
                 rightSection={pickerControlFinish}
                 leftSection={<IconPlayerPause size={20} />}
                 placeholder="Término"
-                value={field.value || undefined}
-                onChange={(value) => field.onChange(value || undefined)}
+                value={field.value || ''}
+                onChange={(value) => field.onChange(value || '')}
                 error={errors.CONFIG_TIME_FINISH?.message}
               />
             )}
