@@ -2,25 +2,26 @@ import { useEffect, useState } from "react";
 import GetSocket from "../../../../utils/GetSocket";
 import { useTimePickerControls } from "../../../../utils/TimePickerControls";
 import { Controller, useForm } from "react-hook-form";
-import { TypeConfig } from "../../../../types/TypeConfig";
+import { TypeConfigEdit } from "../../../../types/TypeConfig";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SchemaConfig } from "../../../../schemas/SchemaConfig";
+import { SchemaConfigEdit } from "../../../../schemas/SchemaConfig";
 import { Button, Flex, Paper, SimpleGrid, TextInput } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { IconLock, IconPlayerPause, IconPlayerPlay, IconUser } from "@tabler/icons-react";
 import ProviderNotification from "../../../../utils/ProviderNotification";
 
 interface Props {
+  configId?: string;
   onClose: () => void;
 }
 
-export default function ModalEditConfig({ onClose }: Props) {
+export default function ModalEditConfig({ configId, onClose }: Props) {
   const socket = GetSocket();
   const [isLoading, setIsLoading] = useState(false);
   const { timeStartRef, timeFinishRef, pickerControlStart, pickerControlFinish } = useTimePickerControls();
-  const { register, control, handleSubmit, formState: { errors } } = useForm<TypeConfig>({
+  const { control, handleSubmit } = useForm<TypeConfigEdit>({
     mode: 'onChange',
-    resolver: yupResolver(SchemaConfig)
+    resolver: yupResolver(SchemaConfigEdit)
   });
 
   useEffect(() => {
@@ -37,17 +38,42 @@ export default function ModalEditConfig({ onClose }: Props) {
     };
   }, [socket]);
 
-  const onSubmit = (data: TypeConfig) => {
+  const onSubmit = (data: TypeConfigEdit) => {
+    console.log(data)
     setIsLoading(true);
-    socket.emit('CONFIG_PUT', data);
+    socket.emit('CONFIG_PUT', configId, data);
   };
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <Paper withBorder p='md'>
         <SimpleGrid cols={{ base: 1, xs: 2 }} spacing={10}>
-          <TextInput {...register("CONFIG_USER")} placeholder="Nome de usuário" error={errors.CONFIG_USER?.message} leftSection={<IconUser size={20} />} />
-          <TextInput {...register("CONFIG_PASSWORD")} placeholder="Senha" error={errors.CONFIG_PASSWORD?.message} leftSection={<IconLock size={20} />} />
+          <Controller
+            name="CONFIG_USER"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                leftSection={<IconUser size={20} />}
+                placeholder="Nome de usuário"
+                value={field.value || ''}
+                onChange={(value) => field.onChange(value || '')}
+              />
+            )}
+          />
+          <Controller
+            name="CONFIG_PASSWORD"
+            control={control}
+            render={({ field }) => (
+              <TextInput
+                {...field}
+                leftSection={<IconLock size={20} />}
+                placeholder="Senha"
+                value={field.value || ''}
+                onChange={(value) => field.onChange(value || '')}
+              />
+            )}
+          />
           <Controller
             name="CONFIG_TIME_START"
             control={control}
@@ -60,7 +86,6 @@ export default function ModalEditConfig({ onClose }: Props) {
                 placeholder="Início"
                 value={field.value || ''}
                 onChange={(value) => field.onChange(value || '')}
-                error={errors.CONFIG_TIME_START?.message}
               />
             )}
           />
@@ -76,7 +101,6 @@ export default function ModalEditConfig({ onClose }: Props) {
                 placeholder="Término"
                 value={field.value || ''}
                 onChange={(value) => field.onChange(value || '')}
-                error={errors.CONFIG_TIME_FINISH?.message}
               />
             )}
           />

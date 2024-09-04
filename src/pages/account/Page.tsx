@@ -119,7 +119,7 @@ export default function PageAccount() {
           blur: 3
         }}
       >
-        {modalContent === 'edit' && <ModalEditConfig onClose={close} />}
+        {modalContent === 'edit' && <ModalEditConfig configId={id} onClose={close} />}
         {modalContent === 'delete' && <ModalDeleteConfig configId={id} onClose={close} />}
       </Modal>
     </>

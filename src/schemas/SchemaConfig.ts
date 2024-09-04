@@ -7,3 +7,11 @@ export const SchemaConfig = yup.object().shape({
   CONFIG_TIME_FINISH: yup.string().required("Hora de término é obrigatória"),
   CONFIG_STATUS: yup.boolean().optional()
 });
+
+export const SchemaConfigEdit = yup.object().shape({
+  CONFIG_USER: yup.string().optional(),
+  CONFIG_PASSWORD: yup.string().optional(),
+  CONFIG_TIME_START: yup.string().optional(),
+  CONFIG_TIME_FINISH: yup.string().optional(),
+  CONFIG_STATUS: yup.boolean().optional()
+});
