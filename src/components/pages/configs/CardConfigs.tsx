@@ -1,4 +1,4 @@
-import { IconAdjustmentsHorizontal, IconCoin, IconCoins, IconEdit, IconLock, IconPlayerPause, IconPlayerPlay, IconTrash, IconUser } from '@tabler/icons-react';
+import { IconAdjustmentsHorizontal, IconCoin, IconCoins, IconLock, IconPlayerPause, IconPlayerPlay, IconReceipt, IconTrash, IconUser } from '@tabler/icons-react';
 import { Card, Text, Group, Badge, Button, ActionIcon, Flex, Stack, Tooltip, Modal } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import ModalDeleteConfig from './modals/ModalDeleteConfig';
@@ -32,9 +32,9 @@ export function CardConfigs({ config }: Props) {
           <Button variant='filled' w='7rem' color={!config.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }}>
             {!config.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
           </Button>
-          <Tooltip color="dimmed" label='Editar configuração'>
+          <Tooltip color="dimmed" label='Detalhes da configuração'>
             <ActionIcon component='a' href={`account/${config._id}`} variant="default" size={36}>
-              <IconEdit size={20} />
+              <IconReceipt size={20} />
             </ActionIcon>
           </Tooltip>
           <Tooltip color="dimmed" label='Deletar configuração'>

@@ -3,6 +3,7 @@ import { IconTrash } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import GetSocket from "../../../../utils/GetSocket";
 import ProviderNotification from "../../../../utils/ProviderNotification";
+import { useNavigate } from "react-router-dom";
 
 interface Props {
   configId?: string;
@@ -12,6 +13,7 @@ interface Props {
 export default function ModalDeleteConfig({ configId, onClose }: Props) {
   const socket = GetSocket();
   const [isLoading, setIsLoading] = useState(false)
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleConfigDelete = (response: { title: string, message: string }) => {
@@ -19,6 +21,7 @@ export default function ModalDeleteConfig({ configId, onClose }: Props) {
       ProviderNotification({ title, message });
       if (title === 'Sucesso') onClose();
       setIsLoading(false);
+      navigate('/')
     };
 
     socket.on('CONFIG_DELETE_RES', handleConfigDelete);
