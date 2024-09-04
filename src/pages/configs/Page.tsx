@@ -67,7 +67,7 @@ export default function PageConfigs() {
             <Button variant="default" type="button" onClick={open} radius="md" w={238} h={309}>
               <Stack w='100%' h='100%' justify="center" align="center" gap={0}>
                 <IconPlus size={50} stroke={1.5} />
-                <Text fw={700}>Adicionar novo</Text>
+                <Text fw={700}>Nova Configuração</Text>
               </Stack>
             </Button>
           </Grid.Col>
