@@ -8,8 +8,8 @@ interface NotificationOptions {
 }
 
 export default function ProviderNotification({ title, message }: NotificationOptions) {
-  const notificationColor = title === 'Sucesso' ? 'green' : 'red'; 
-  const notificationIcon = title === 'Sucesso' ? <IconCheck /> : <IconX />; 
+  const notificationColor = title === 'Sucesso' ? 'green' : 'red';
+  const notificationIcon = title === 'Sucesso' ? <IconCheck /> : <IconX />;
 
   notifications.show({
     title: title,

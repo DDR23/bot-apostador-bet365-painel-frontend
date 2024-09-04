@@ -36,7 +36,7 @@ export default function ModalCreateConfig({ onClose }: Props) {
       if (title === 'Sucesso') onClose();
       setIsLoading(false);
     };
-    
+
     socket.on('CONFIG_POST_RES', handleConfigCreated);
     return () => {
       socket.off('CONFIG_POST_RES', handleConfigCreated);
