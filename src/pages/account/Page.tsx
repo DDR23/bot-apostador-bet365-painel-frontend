@@ -7,6 +7,7 @@ import GetSocket from "../../utils/GetSocket";
 import { useEffect, useState } from "react";
 import { TypeConfig } from "../../types/TypeConfig";
 import ModalDeleteConfig from "../../components/pages/configs/modals/ModalDeleteConfig";
+import ModalEditConfig from "../../components/pages/configs/modals/ModalEditConfig";
 
 export default function PageAccount() {
   const socket = GetSocket();
@@ -33,7 +34,7 @@ export default function PageAccount() {
       socket.off('CONFIG_GET_RES', handleConfigGet)
     }
   }, [socket])
-  
+
 
   // const rows = configs.map((config, index) => (
   //   <Grid.Col key={index} span={"content"}>
@@ -110,15 +111,16 @@ export default function PageAccount() {
       <Modal
         opened={opened}
         onClose={close}
-        withCloseButton={false}
+        withCloseButton={modalContent === 'edit'}
+        title={modalContent === 'edit' ? 'Editar dados da BET365 - TÊNIS' : ''}
         size='auto'
         overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3
         }}
       >
-        {modalContent === 'edit' && <>modal de editar config</>}
-        {modalContent === 'delete' && <ModalDeleteConfig configId={id} onClose={close}/>}
+        {modalContent === 'edit' && <ModalEditConfig onClose={close} />}
+        {modalContent === 'delete' && <ModalDeleteConfig configId={id} onClose={close} />}
       </Modal>
     </>
   );
