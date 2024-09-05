@@ -10,6 +10,7 @@ import ModalDeleteConfig from "../../components/pages/configs/modals/ModalDelete
 import ModalEditConfig from "../../components/pages/configs/modals/ModalEditConfig";
 import ProviderInitBot from "../../utils/ProviderInitBot";
 import ProviderDevice from "../../utils/ProviderDevice";
+import ModalCreateStrategy from "../../components/pages/configs/modals/ModalCreateStrategy";
 
 export default function PageAccount() {
   const socket = GetSocket();
@@ -17,9 +18,9 @@ export default function PageAccount() {
   const { isDesktop } = ProviderDevice();
   const [opened, { open, close }] = useDisclosure(false);
   const [config, setConfig] = useState<TypeConfig>();
-  const [modalContent, setModalContent] = useState<'edit' | 'delete' | ''>('');
+  const [modalContent, setModalContent] = useState<'create' | 'edit' | 'delete' | ''>('');
 
-  const handleOpen = (content: 'edit' | 'delete') => {
+  const handleOpen = (content: 'create' | 'edit' | 'delete') => {
     setModalContent(content);
     open();
   };
@@ -101,7 +102,7 @@ export default function PageAccount() {
           <Grid justify="center" >
             {/* {configs.length > 0 ? rows : ''} */}
             <Grid.Col span={"content"}>
-              <Button variant="default" type="button" onClick={open} radius="md" w={isDesktop ? '238' : '90vw'} h={isDesktop ? '309' : '120'}>
+              <Button variant="default" type="button" onClick={() => handleOpen('create')} radius="md" w={isDesktop ? '238' : '90vw'} h={isDesktop ? '309' : '120'}>
                 <Stack w='100%' h='100%' justify="center" align="center" gap={0}>
                   <IconPlus size={50} stroke={1.5} />
                   <Text fw={700}>Nova estratégia</Text>
@@ -114,14 +115,15 @@ export default function PageAccount() {
       <Modal
         opened={opened}
         onClose={close}
-        withCloseButton={modalContent === 'edit'}
-        title={modalContent === 'edit' ? 'Editar dados da BET365 - TÊNIS' : ''}
+        withCloseButton={modalContent !== 'delete'}
+        title={modalContent === 'edit' ? 'Editar dados da BET365 - TÊNIS' : modalContent === 'create' ? 'Adicionar estratégia BET365 - TÊNIS' : ''}
         size='auto'
         overlayProps={{
           backgroundOpacity: 0.55,
           blur: 3
         }}
       >
+        {modalContent === 'create' && <ModalCreateStrategy configId={id} onClose={close} />}
         {modalContent === 'edit' && <ModalEditConfig configId={id} onClose={close} />}
         {modalContent === 'delete' && <ModalDeleteConfig configId={id} onClose={close} />}
       </Modal>
