@@ -14,6 +14,7 @@ export default function ProviderNotification({ title, message }: NotificationOpt
   notifications.show({
     title: title,
     message: message,
+    position: 'top-right',
     autoClose: 3000,
     color: notificationColor,
     icon: notificationIcon
