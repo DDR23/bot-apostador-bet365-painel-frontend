@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import GetSocket from "../../../../utils/GetSocket";
 import { useTimePickerControls } from "../../../../utils/TimePickerControls";
 import { Controller, useForm } from "react-hook-form";
-import { TypeConfigEdit } from "../../../../types/TypeConfig";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SchemaConfigEdit } from "../../../../schemas/SchemaConfig";
 import { Button, Flex, Paper, SimpleGrid, TextInput } from "@mantine/core";
 import { TimeInput } from "@mantine/dates";
 import { IconLock, IconPlayerPause, IconPlayerPlay, IconUser } from "@tabler/icons-react";
 import ProviderNotification from "../../../../utils/ProviderNotification";
+import { TypeConfigUpdate } from "../../../../types/TypeConfig";
+import { SchemaConfigUpdate } from "../../../../schemas/SchemaConfig";
 
 interface Props {
   configId?: string;
@@ -19,9 +19,9 @@ export default function ModalEditConfig({ configId, onClose }: Props) {
   const socket = GetSocket();
   const [isLoading, setIsLoading] = useState(false);
   const { timeStartRef, timeFinishRef, pickerControlStart, pickerControlFinish } = useTimePickerControls();
-  const { control, handleSubmit } = useForm<TypeConfigEdit>({
+  const { control, handleSubmit } = useForm<TypeConfigUpdate>({
     mode: 'onChange',
-    resolver: yupResolver(SchemaConfigEdit)
+    resolver: yupResolver(SchemaConfigUpdate)
   });
 
   useEffect(() => {
@@ -38,7 +38,7 @@ export default function ModalEditConfig({ configId, onClose }: Props) {
     };
   }, [socket]);
 
-  const onSubmit = (data: TypeConfigEdit) => {
+  const onSubmit = (data: TypeConfigUpdate) => {
     setIsLoading(true);
     socket.emit('CONFIG_PUT', configId, data);
   };

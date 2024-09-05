@@ -5,7 +5,7 @@ export const SchemaConfigCreate = yup.object().shape({
   CONFIG_PASSWORD: yup.string().required("Senha é obrigatória")
 });
 
-export const SchemaConfigEdit = yup.object().shape({
+export const SchemaConfigUpdate = yup.object().shape({
   CONFIG_USER: yup.string().optional(),
   CONFIG_PASSWORD: yup.string().optional(),
   CONFIG_TIME_START: yup.string().optional(),

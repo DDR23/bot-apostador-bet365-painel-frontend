@@ -18,7 +18,7 @@ export interface TypeConfigCreate {
   CONFIG_PASSWORD: string;
 }
 
-export interface TypeConfigEdit {
+export interface TypeConfigUpdate {
   CONFIG_USER?: string;
   CONFIG_PASSWORD?: string;
   CONFIG_TIME_START?: string;
