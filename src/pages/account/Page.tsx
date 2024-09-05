@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import { TypeConfig } from "../../types/TypeConfig";
 import ModalDeleteConfig from "../../components/pages/configs/modals/ModalDeleteConfig";
 import ModalEditConfig from "../../components/pages/configs/modals/ModalEditConfig";
+import ProviderInitBot from "../../utils/ProviderInitBot";
 
 export default function PageAccount() {
   const socket = GetSocket();
@@ -20,18 +21,24 @@ export default function PageAccount() {
     setModalContent(content);
     open();
   };
-  console.log(config)
 
   useEffect(() => {
-    const handleConfigGet = (response: { data?: TypeConfig }) => {
+    const handleConfigGetRes = (response: { data?: TypeConfig }) => {
       const { data } = response;
       setConfig(data);
     }
 
+    const handleConfigPutRes = (respose: { data?: TypeConfig }) => {
+      const { data } = respose;
+      setConfig(data);
+    }
+
     socket.emit('CONFIG_GET', id);
-    socket.on('CONFIG_GET_RES', handleConfigGet);
+    socket.on('CONFIG_GET_RES', handleConfigGetRes);
+    socket.on('CONFIG_PUT_RES', handleConfigPutRes);
     return () => {
-      socket.off('CONFIG_GET_RES', handleConfigGet)
+      socket.off('CONFIG_GET_RES', handleConfigGetRes);
+      socket.off('CONFIG_PUT_RES', handleConfigPutRes);
     }
   }, [socket])
 
@@ -52,7 +59,7 @@ export default function PageAccount() {
           <Stack gap='sm'>
             <Paper p='md'>
               <Group justify="flex-end" mb='sm'>
-                <Badge variant="dot" color='green'>on</Badge>
+                <Badge variant="dot" color={config?.CONFIG_STATUS ? 'green' : 'red'}>{config?.CONFIG_STATUS ? 'On' : 'Off'}</Badge>
               </Group>
               <SimpleGrid cols={{ base: 1, xs: 2 }} spacing='sm'>
                 <Flex align='center'><IconUser size={20} /><Text fw={700} ml={5} inline>Usuário:</Text><Text inline ml={10}>{config?.CONFIG_USER}</Text></Flex>
@@ -62,7 +69,7 @@ export default function PageAccount() {
               </SimpleGrid>
               <Divider my='md' />
               <Group mt="md" gap={10}>
-                <Button variant='filled' w='7rem' color='green' style={{ flex: 1 }}>
+                <Button variant='filled' w='7rem' color={!config?.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }} onClick={() => ProviderInitBot(config!)}>
                   {!config?.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
                 </Button>
                 <Tooltip color="dimmed" label='Editar configuração'>
