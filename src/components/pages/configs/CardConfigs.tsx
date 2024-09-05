@@ -3,6 +3,7 @@ import { Card, Text, Group, Badge, Button, ActionIcon, Flex, Stack, Tooltip, Mod
 import { useDisclosure } from '@mantine/hooks';
 import ModalDeleteConfig from './modals/ModalDeleteConfig';
 import { TypeConfig } from '../../../types/TypeConfig';
+import ProviderInitBot from '../../../utils/ProviderInitBot';
 
 interface Props {
   config: TypeConfig;
@@ -29,7 +30,7 @@ export function CardConfigs({ config }: Props) {
           </Stack>
         </Card.Section>
         <Group mt="md" gap={10}>
-          <Button variant='filled' w='7rem' color={!config.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }}>
+          <Button variant='filled' w='7rem' color={!config.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }} onClick={() => ProviderInitBot(config!)}>
             {!config.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
           </Button>
           <Tooltip color="dimmed" label='Detalhes da configuração'>

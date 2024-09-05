@@ -32,6 +32,17 @@ export default function PageConfigs() {
       }
     };
 
+    const handleConfigPutRes = (response: { data?: TypeConfig }) => {
+      const { data } = response;
+      if (data) {
+        setConfigs(prevConfigs => 
+          prevConfigs.map(config => 
+            config._id === data._id ? data : config
+          )
+        );
+      }
+    };
+
     const handleConfigDeleteRes = (response: { id: string }) => {
       const { id } = response;
       setConfigs(prevConfigs => {
@@ -43,11 +54,13 @@ export default function PageConfigs() {
     socket.emit('CONFIG_GETALL');
     socket.on('CONFIG_GETALL_RES', handleConfigsGetAllRes);
     socket.on('CONFIG_POST_RES', handleConfigPostRes);
+    socket.on('CONFIG_PUT_RES', handleConfigPutRes);
     socket.on('CONFIG_DELETE_RES', handleConfigDeleteRes);
-
+    
     return () => {
       socket.off('CONFIG_GETALL_RES', handleConfigsGetAllRes);
       socket.off('CONFIG_POST_RES', handleConfigPostRes);
+      socket.off('CONFIG_PUT_RES', handleConfigPutRes);
       socket.off('CONFIG_DELETE_RES', handleConfigDeleteRes);
     };
   }, [socket]);
