@@ -55,7 +55,7 @@ export default function PageAccount() {
         <Paper pos='fixed' top={0} withBorder w='100vw' p='md' style={{ zIndex: '100', backgroundColor: 'Background' }}>
           <MenuNavigation />
         </Paper>
-        <Paper withBorder p='md' w='90vw' style={{ backgroundColor: 'Background' }}>
+        <Paper withBorder p='sm' w='90vw' style={{ backgroundColor: 'Background' }}>
           <Stack gap='sm'>
             <Paper p='md'>
               <Group justify="flex-end" mb='sm'>
