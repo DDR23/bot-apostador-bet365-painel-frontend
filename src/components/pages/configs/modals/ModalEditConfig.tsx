@@ -39,7 +39,6 @@ export default function ModalEditConfig({ configId, onClose }: Props) {
   }, [socket]);
 
   const onSubmit = (data: TypeConfigEdit) => {
-    console.log(data)
     setIsLoading(true);
     socket.emit('CONFIG_PUT', configId, data);
   };
