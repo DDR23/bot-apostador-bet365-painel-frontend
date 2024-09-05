@@ -33,6 +33,7 @@ export default function PageAccount() {
 
     const handleConfigPutRes = (respose: { data?: TypeConfig }) => {
       const { data } = respose;
+      if (data === undefined) return;
       setConfig(data);
     }
 
