@@ -24,7 +24,7 @@ export function CardConfigs({ config }: Props) {
           <Stack gap={7}>
             <Flex align='center'><IconUser size={20} /><Text fw={700} ml={5} inline>Usuário:</Text><Text inline ml={10}>{config.CONFIG_USER}</Text></Flex>
             <Flex align='center'><IconLock size={20} /><Text fw={700} ml={5} inline>Senha:</Text><Text inline ml={10}>{config.CONFIG_PASSWORD}</Text></Flex>
-            <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>{config.CONFIG_STRATEGIES?.length}</Text></Flex>
+            <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>{config.CONFIG_STRATEGIES.length}</Text></Flex>
             <Flex align='center'><IconPlayerPlay size={20} /><Text fw={700} ml={5} inline>Início:</Text><Text inline ml={10}>{config.CONFIG_TIME_START}</Text></Flex>
             <Flex align='center'><IconPlayerPause size={20} /><Text fw={700} ml={5} inline>Final:</Text><Text inline ml={10}>{config.CONFIG_TIME_FINISH}</Text></Flex>
             <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>{config.CONFIG_ENTRIES}</Text></Flex>

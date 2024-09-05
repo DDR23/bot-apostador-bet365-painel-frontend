@@ -2,8 +2,8 @@ import { Paper, SimpleGrid, TextInput, Button, Flex } from "@mantine/core";
 import { IconLock, IconUser } from "@tabler/icons-react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { SchemaConfig } from "../../../../schemas/SchemaConfig";
-import { TypeConfig } from "../../../../types/TypeConfig";
+import { SchemaConfigCreate } from "../../../../schemas/SchemaConfig";
+import { TypeConfigCreate } from "../../../../types/TypeConfig";
 import GetSocket from "../../../../utils/GetSocket";
 import { useEffect, useState } from "react";
 import ProviderNotification from "../../../../utils/ProviderNotification";
@@ -15,14 +15,12 @@ interface Props {
 export default function ModalCreateConfig({ onClose }: Props) {
   const socket = GetSocket();
   const [isLoading, setIsLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<TypeConfig>({
+  const { register, handleSubmit, formState: { errors } } = useForm<TypeConfigCreate>({
     mode: 'onChange',
-    resolver: yupResolver(SchemaConfig),
+    resolver: yupResolver(SchemaConfigCreate),
     defaultValues: {
       CONFIG_USER: '',
-      CONFIG_PASSWORD: '',
-      CONFIG_TIME_START: '--:--',
-      CONFIG_TIME_FINISH: '--:--',
+      CONFIG_PASSWORD: ''
     },
   });
 
@@ -40,7 +38,7 @@ export default function ModalCreateConfig({ onClose }: Props) {
     };
   }, [socket]);
 
-  const onSubmit = (data: TypeConfig) => {
+  const onSubmit = (data: TypeConfigCreate) => {
     setIsLoading(true);
     socket.emit('CONFIG_POST', data);
   };
