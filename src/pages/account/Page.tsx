@@ -10,7 +10,7 @@ import ModalDeleteConfig from "../../components/pages/configs/modals/ModalDelete
 import ModalEditConfig from "../../components/pages/configs/modals/ModalEditConfig";
 import ProviderInitBot from "../../utils/ProviderInitBot";
 import ProviderDevice from "../../utils/ProviderDevice";
-import ModalCreateStrategy from "../../components/pages/configs/modals/ModalCreateStrategy";
+import ModalCreateStrategy from "../../components/pages/account/modals/ModalCreateStrategy";
 
 export default function PageAccount() {
   const socket = GetSocket();
@@ -48,7 +48,7 @@ export default function PageAccount() {
 
   // const rows = configs.map((config, index) => (
   //   <Grid.Col key={index} span={"content"}>
-  //     <CardConfigs config={config} />
+  //     <CardStrategies config={config} />
   //   </Grid.Col>
   // ));
 

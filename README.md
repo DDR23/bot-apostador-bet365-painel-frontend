@@ -16,6 +16,8 @@ O intuito desse projeto é monstar um frontend com as configurações minimas de
 
 
 
+<!-- TODO - tudo pronto pra começar o desenvolvimento da logica de strategy -->
+
 
 <!-- 
 
