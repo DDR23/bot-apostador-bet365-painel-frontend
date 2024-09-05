@@ -6,8 +6,7 @@ import ProviderNotification from "./ProviderNotification";
 export default function ProviderInitBot(config: TypeConfig) {
   const socket = GetSocket();
   const handleConfigPutRes = (response: { title: string, message: string }) => {
-    const { title } = response;
-    const message = 'bot iniciado'
+    const { title, message } = response;
     ProviderNotification({ title, message });
 
     socket.off('CONFIG_PUT_RES', handleConfigPutRes);
