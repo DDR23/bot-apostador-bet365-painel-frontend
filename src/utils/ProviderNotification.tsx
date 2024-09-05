@@ -1,5 +1,5 @@
 import { notifications } from "@mantine/notifications";
-import { IconCheck, IconX } from "@tabler/icons-react";
+import { IconCheck, IconExclamationMark, IconX } from "@tabler/icons-react";
 
 interface NotificationOptions {
   title: string;
@@ -8,8 +8,8 @@ interface NotificationOptions {
 }
 
 export default function ProviderNotification({ title, message }: NotificationOptions) {
-  const notificationColor = title === 'Sucesso' ? 'green' : 'red';
-  const notificationIcon = title === 'Sucesso' ? <IconCheck /> : <IconX />;
+  const notificationColor = title === 'Sucesso' ? 'green' : title === 'Alerta' ? 'Orange' : 'red';
+  const notificationIcon = title === 'Sucesso' ? <IconCheck /> : title === 'Alerta' ? <IconExclamationMark /> : <IconX />;
 
   notifications.show({
     title: title,

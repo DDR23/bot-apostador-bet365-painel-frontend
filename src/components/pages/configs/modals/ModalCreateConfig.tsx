@@ -30,7 +30,7 @@ export default function ModalCreateConfig({ onClose }: Props) {
     const handleConfigCreated = (response: { title: string, message: string }) => {
       const { title, message } = response;
       ProviderNotification({ title, message });
-      if (title === 'Sucesso') onClose();
+      if (title !== 'Erro') onClose();
       setIsLoading(false);
     };
 

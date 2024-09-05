@@ -19,7 +19,7 @@ export default function ModalDeleteConfig({ configId, onClose }: Props) {
     const handleConfigDelete = (response: { title: string, message: string }) => {
       const { title, message } = response;
       ProviderNotification({ title, message });
-      if (title === 'Sucesso') onClose();
+      if (title !== 'Erro') onClose();
       setIsLoading(false);
       navigate('/')
     };

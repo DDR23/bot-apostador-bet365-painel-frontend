@@ -28,7 +28,7 @@ export default function ModalEditConfig({ configId, onClose }: Props) {
     const handleConfigUpdate = (response: { title: string, message: string }) => {
       const { title, message } = response;
       ProviderNotification({ title, message });
-      if (title === 'Sucesso') onClose();
+      if (title !== 'Erro') onClose();
       setIsLoading(false);
     };
 
