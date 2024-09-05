@@ -17,11 +17,7 @@ export default function ModalCreateConfig({ onClose }: Props) {
   const [isLoading, setIsLoading] = useState(false);
   const { register, handleSubmit, formState: { errors } } = useForm<TypeConfigCreate>({
     mode: 'onChange',
-    resolver: yupResolver(SchemaConfigCreate),
-    defaultValues: {
-      CONFIG_USER: '',
-      CONFIG_PASSWORD: ''
-    },
+    resolver: yupResolver(SchemaConfigCreate)
   });
 
   useEffect(() => {
