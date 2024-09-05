@@ -4,17 +4,19 @@ import { useDisclosure } from '@mantine/hooks';
 import ModalDeleteConfig from './modals/ModalDeleteConfig';
 import { TypeConfig } from '../../../types/TypeConfig';
 import ProviderInitBot from '../../../utils/ProviderInitBot';
+import ProviderDevice from '../../../utils/ProviderDevice';
 
 interface Props {
   config: TypeConfig;
 }
 
 export function CardConfigs({ config }: Props) {
+  const { isDesktop } = ProviderDevice();
   const [opened, { open, close }] = useDisclosure(false);
 
   return (
     <>
-      <Card withBorder radius="md" p="md" bg='none'>
+      <Card withBorder radius="md" p="md" bg='none' w={isDesktop ? '238' : '90vw'}>
         <Card.Section withBorder p='sm'>
           <Group justify="flex-end" mb='sm'>
             <Badge variant="dot" color={config.CONFIG_STATUS ? 'green' : 'red'}>{config.CONFIG_STATUS ? 'on' : 'off'}</Badge>

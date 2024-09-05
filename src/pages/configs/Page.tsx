@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import GetSocket from "../../utils/GetSocket";
 import { TypeConfig } from "../../types/TypeConfig";
 import { CardConfigs } from "../../components/pages/configs/CardConfigs";
+import ProviderDevice from "../../utils/ProviderDevice";
 
 export default function PageConfigs() {
   const socket = GetSocket();
+  const { isDesktop } = ProviderDevice();
   const [opened, { open, close }] = useDisclosure(false);
   const [configs, setConfigs] = useState<TypeConfig[]>([]);
 
@@ -77,7 +79,7 @@ export default function PageConfigs() {
         <Grid justify="center">
           {configs.length > 0 ? rows : ''}
           <Grid.Col span={"content"}>
-            <Button variant="default" type="button" onClick={open} radius="md" w={238} h={309}>
+            <Button variant="default" type="button" onClick={open} radius="md" w={isDesktop ? '238' : '90vw'} h={isDesktop ? '309' : '120'}>
               <Stack w='100%' h='100%' justify="center" align="center" gap={0}>
                 <IconPlus size={50} stroke={1.5} />
                 <Text fw={700}>Nova Configuração</Text>

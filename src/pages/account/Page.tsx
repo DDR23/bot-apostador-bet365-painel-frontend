@@ -1,4 +1,4 @@
-import { ActionIcon, Badge, Button, Center, Divider, Flex, Grid, Group, Modal, Paper, SimpleGrid, Stack, Text, Tooltip } from "@mantine/core";
+import { ActionIcon, Badge, Button, Divider, Flex, Grid, Group, Modal, Paper, SimpleGrid, Stack, Text, Tooltip } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconAdjustmentsHorizontal, IconCoin, IconCoins, IconEdit, IconLock, IconPlayerPause, IconPlayerPlay, IconPlus, IconTrash, IconUser } from "@tabler/icons-react";
 import { useParams } from "react-router-dom";
@@ -9,10 +9,12 @@ import { TypeConfig } from "../../types/TypeConfig";
 import ModalDeleteConfig from "../../components/pages/configs/modals/ModalDeleteConfig";
 import ModalEditConfig from "../../components/pages/configs/modals/ModalEditConfig";
 import ProviderInitBot from "../../utils/ProviderInitBot";
+import ProviderDevice from "../../utils/ProviderDevice";
 
 export default function PageAccount() {
   const socket = GetSocket();
   const { id } = useParams()
+  const { isDesktop } = ProviderDevice();
   const [opened, { open, close }] = useDisclosure(false);
   const [config, setConfig] = useState<TypeConfig>();
   const [modalContent, setModalContent] = useState<'edit' | 'delete' | ''>('');
@@ -51,7 +53,7 @@ export default function PageAccount() {
 
   return (
     <>
-      <Stack h="100%" mih='100vh' m='auto' justify="center" align="center" px={20} py={80}>
+      <Stack h="100%" mih='100vh' m='auto' justify="center" align="center" px={20} pt={80} gap={0}>
         <Paper pos='fixed' top={0} withBorder w='100vw' p='md' style={{ zIndex: '100', backgroundColor: 'Background' }}>
           <MenuNavigation />
         </Paper>
@@ -95,11 +97,11 @@ export default function PageAccount() {
             </Paper>
           </Stack>
         </Paper>
-        <Center flex={1}>
+        <Flex flex={1} py='md'>
           <Grid justify="center" >
             {/* {configs.length > 0 ? rows : ''} */}
             <Grid.Col span={"content"}>
-              <Button variant="default" type="button" onClick={open} radius="md" w={238} h={309}>
+              <Button variant="default" type="button" onClick={open} radius="md" w={isDesktop ? '238' : '90vw'} h={isDesktop ? '309' : '120'}>
                 <Stack w='100%' h='100%' justify="center" align="center" gap={0}>
                   <IconPlus size={50} stroke={1.5} />
                   <Text fw={700}>Nova estratégia</Text>
@@ -107,13 +109,7 @@ export default function PageAccount() {
               </Button>
             </Grid.Col>
           </Grid>
-        </Center>
-        <Paper pos='fixed' bottom={0} withBorder w='100vw' style={{ backgroundColor: 'Background' }}>
-          <Flex justify='center' gap='md' p='sm'>
-            <Button>Iniciar</Button>
-            <Button bg='red'>Parar</Button>
-          </Flex>
-        </Paper>
+        </Flex>
       </Stack>
       <Modal
         opened={opened}
