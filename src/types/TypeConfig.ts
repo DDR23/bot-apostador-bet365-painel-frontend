@@ -10,7 +10,6 @@ export interface TypeConfig {
   CONFIG_STRATEGIES: string[];
   createdAt: string;
   updatedAt: string;
-  __v: number;
 }
 
 export interface TypeConfigCreate {

@@ -10,7 +10,7 @@ export const SchemaStrategyTenisCreate = yup.object().shape({
   STRATEGY_DIFF_POINT_PLAYER1: yup.number().optional(),
   STRATEGY_DIFF_POINT_PLAYER2: yup.number().optional(),
   STRATEGY_MULTIPLIER: yup.number().optional(),
-  STRATEGY_ENTRY_VALUE: yup.number().required("Valor das entradas é obrigatório"),
+  STRATEGY_ENTRY_VALUE: yup.number().required("Valor das entradas é obrigatório").min(1, 'Minimo R$ 1,00'),
   STRATEGY_STOP: yup.boolean().optional(),
   STRATEGY_STOP_WIN: yup.number().optional(),
   STRATEGY_STOP_LOSS: yup.number().optional()

@@ -6,7 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import { SchemaStrategyTenisCreate } from "../../../../schemas/SchemaStrategyTenis";
 import GetSocket from "../../../../utils/GetSocket";
 import ProviderNotification from "../../../../utils/ProviderNotification";
-import { IconBrandSupabase, IconCoin, IconPingPong, IconScoreboard } from "@tabler/icons-react";
+import { IconBrandSupabase, IconCoin, IconPingPong, IconScoreboard, IconTrophy, IconXboxX } from "@tabler/icons-react";
 import ProviderDevice from "../../../../utils/ProviderDevice";
 
 interface Props {
@@ -26,42 +26,44 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
     resolver: yupResolver(SchemaStrategyTenisCreate),
     defaultValues: {
       STRATEGY_DIFF_SET_TYPE: 'diff',
-      // STRATEGY_DIFF_SET: 0,
-      // STRATEGY_DIFF_SET_PLAYER1: 0,
-      // STRATEGY_DIFF_SET_PLAYER2: 0,
+      STRATEGY_DIFF_SET: 0,
+      STRATEGY_DIFF_SET_PLAYER1: 0,
+      STRATEGY_DIFF_SET_PLAYER2: 0,
       STRATEGY_DIFF_POINT_TYPE: 'diff',
-      // STRATEGY_DIFF_POINT: 0,
-      // STRATEGY_DIFF_POINT_PLAYER1: 0,
-      // STRATEGY_DIFF_POINT_PLAYER2: 0,
-      // STRATEGY_MULTIPLIER: 0,
-      // STRATEGY_STOP: false,
-      // STRATEGY_STOP_WIN: 0,
-      // STRATEGY_STOP_LOSS: 0,
+      STRATEGY_DIFF_POINT: 0,
+      STRATEGY_DIFF_POINT_PLAYER1: 0,
+      STRATEGY_DIFF_POINT_PLAYER2: 0,
+      STRATEGY_MULTIPLIER: 0,
+      STRATEGY_ENTRY_VALUE: 0,
+      STRATEGY_STOP: false,
+      STRATEGY_STOP_LOSS: 0,
+      STRATEGY_STOP_WIN: 0
     }
   });
 
   useEffect(() => {
-    const handleConfigCreated = (response: { title: string, message: string }) => {
+    const handleStrategyCreated = (response: { title: string, message: string }) => {
       const { title, message } = response;
       ProviderNotification({ title, message });
       if (title !== 'Erro') onClose();
       setIsLoading(false);
     };
 
-    socket.on('CONFIG_POST_RES', handleConfigCreated);
+    socket.on('STRATEGY_POST_RES', handleStrategyCreated);
     return () => {
-      socket.off('CONFIG_POST_RES', handleConfigCreated);
+      socket.off('STRATEGY_POST_RES', handleStrategyCreated);
     };
   }, [socket]);
 
   const onSubmit = (data: TypeStrategyTenisCreate) => {
     setIsLoading(true);
+    const strategyEntryValue = data.STRATEGY_ENTRY_VALUE as number * 100;
     const updatedData = {
       ...data,
-      STRATEGY_CONFIG: configId
+      STRATEGY_CONFIG: configId,
+      STRATEGY_ENTRY_VALUE: strategyEntryValue
     }
-    console.log(updatedData)
-    // socket.emit('CONFIG_POST', data);
+    socket.emit('STRATEGY_POST', updatedData);
   };
 
   const setDiffContent = () => {
@@ -72,7 +74,7 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
         render={({ field }) => (
           <NumberInput
             {...field}
-            placeholder="Diferença de set"
+            description="Diferença de set"
             allowDecimal={false}
             min={0}
             max={2}
@@ -92,7 +94,7 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
           render={({ field }) => (
             <NumberInput
               {...field}
-              placeholder="Player 1"
+              description="Jogador 1"
               allowDecimal={false}
               min={0}
               max={2}
@@ -106,7 +108,7 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
           render={({ field }) => (
             <NumberInput
               {...field}
-              placeholder="Player 2"
+              description="Jogador 2"
               allowDecimal={false}
               min={0}
               max={2}
@@ -126,7 +128,7 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
         render={({ field }) => (
           <NumberInput
             {...field}
-            placeholder="Diferença de ponto"
+            description="Diferença de ponto"
             allowDecimal={false}
             min={0}
             max={10}
@@ -146,7 +148,7 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
           render={({ field }) => (
             <NumberInput
               {...field}
-              placeholder="Player 1"
+              description="Jogador 1"
               allowDecimal={false}
               min={0}
               max={30}
@@ -160,7 +162,7 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
           render={({ field }) => (
             <NumberInput
               {...field}
-              placeholder="Player 2"
+              description="Jogador 2"
               allowDecimal={false}
               min={0}
               max={30}
@@ -176,30 +178,30 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
     return (
       <SimpleGrid cols={{ base: 1, xs: 2 }} spacing={10} pos='static' mt='xs'>
         <Controller
-          name={'STRATEGY_DIFF_POINT_PLAYER1'}
+          name={'STRATEGY_STOP_LOSS'}
           control={control}
           render={({ field }) => (
             <NumberInput
               {...field}
-              placeholder="Player 1"
+              description="Stop loss"
               allowDecimal={false}
               min={0}
-              max={30}
-              leftSection={<IconPingPong size={20} />}
+              suffix="%"
+              leftSection={<IconXboxX size={20} />}
             />
           )}
         />
         <Controller
-          name={'STRATEGY_DIFF_POINT_PLAYER2'}
+          name={'STRATEGY_STOP_WIN'}
           control={control}
           render={({ field }) => (
             <NumberInput
               {...field}
-              placeholder="Player 2"
+              description="Stop win"
               allowDecimal={false}
               min={0}
-              max={30}
-              leftSection={<IconPingPong size={20} />}
+              suffix="%"
+              leftSection={<IconTrophy size={20} />}
             />
           )}
         />
@@ -268,7 +270,7 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
               render={({ field }) => (
                 <NumberInput
                   {...field}
-                  placeholder="Multiplicador"
+                  description="Multiplicador"
                   min={0}
                   decimalScale={2}
                   leftSection={<IconBrandSupabase size={20} />}
@@ -288,7 +290,7 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
               render={({ field }) => (
                 <NumberInput
                   {...field}
-                  placeholder="Valor de Entrada"
+                  description="Valor de Entrada"
                   min={1}
                   decimalScale={2}
                   decimalSeparator=","
@@ -301,23 +303,23 @@ export default function ModalCreateStrategy({ configId, onClose }: Props) {
             />
           </Stack>
         </Paper>
-
       </SimpleGrid>
 
       {/* STOP */}
       <Paper withBorder p='xs' mt='xs' pos='relative' maw={isDesktop ? '100%' : '280'}>
         <Flex>
           <Text size="xs" c='dimmed' fw={900} mr='xs' style={{ zIndex: '1000' }}>STOP</Text>
-          <Switch size="xs" style={{ zIndex: '1000' }} onClick={() => setStopVisible((v) => !v)} />
+          <Switch size="xs" style={{ zIndex: '1000' }} onClick={() => setStopVisible((v) => !v)} onChange={(e) => {
+            const isChecked = e.currentTarget.checked;
+            setValue('STRATEGY_STOP', isChecked);
+          }} />
         </Flex>
         {stopContent()}
         {stopVisible && <Overlay bg='#23232320' radius='sm' blur={2} backgroundOpacity={0.5} />}
       </Paper>
 
-
       <Flex mt='md' justify='flex-end'>
-        <Button type="submit">Salvar</Button>
-        {/* <Button type="submit" loading={isLoading}>Salvar</Button> */}
+        <Button type="submit" loading={isLoading}>Salvar</Button>
       </Flex>
     </form>
   );
