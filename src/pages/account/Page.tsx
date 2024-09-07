@@ -39,6 +39,21 @@ export default function PageAccount() {
       setStrategies(data || [])
     }
 
+    const handleStrategyPostRes = (response: { title: string, data?: TypeStrategyTenis | TypeStrategyTenis[] }) => {
+      const { title, data } = response;
+      if (title === 'Sucesso') {
+        if (Array.isArray(data)) {
+          setStrategies(data);
+        } else if (data) {
+          setStrategies(prevStrategies => {
+            const updatedStrategies = prevStrategies.filter(strategy => strategy._id !== data._id);
+            return [...updatedStrategies, data]
+          });
+        }
+        socket.emit('CONFIG_GET', id);
+      }
+    }
+
     const handleConfigPutRes = (respose: { data?: TypeConfig }) => {
       const { data } = respose;
       if (data === undefined) return;
@@ -50,14 +65,17 @@ export default function PageAccount() {
 
     socket.on('CONFIG_GET_RES', handleConfigGetRes);
     socket.on('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
+    socket.on('STRATEGY_POST_RES', handleStrategyPostRes)
     socket.on('CONFIG_PUT_RES', handleConfigPutRes);
     return () => {
       socket.off('CONFIG_GET_RES', handleConfigGetRes);
       socket.off('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
+      socket.off('STRATEGY_POST_RES', handleStrategyPostRes)
       socket.off('CONFIG_PUT_RES', handleConfigPutRes);
     }
   }, [socket])
 
+  //TODO - deletar uma config nao ta apagando as estrategias dela
 
   const rows = strategies.map((strategy, index) => (
     <Grid.Col key={index} span={"content"}>
@@ -104,7 +122,7 @@ export default function PageAccount() {
             </Paper>
             <Paper p='md'>
               <SimpleGrid cols={{ base: 1, xs: 3 }} spacing='sm'>
-                <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>{config?.CONFIG_STRATEGIES?.length}</Text></Flex>
+                <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>{config?.CONFIG_STRATEGIES.length}</Text></Flex>
                 <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>{config?.CONFIG_ENTRIES}</Text></Flex>
                 <Flex align='center'><IconCoins size={20} /><Text fw={700} ml={5} inline>Resultado:</Text><Text inline ml={10}>{config?.CONFIG_RESULT}</Text></Flex>
               </SimpleGrid>
