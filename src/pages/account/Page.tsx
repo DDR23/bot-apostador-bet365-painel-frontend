@@ -46,7 +46,7 @@ export default function PageAccount() {
     }
 
     socket.emit('CONFIG_GET', id);
-    socket.emit('STRATEGY_GETALL_BY_CONFIG', config?._id);
+    socket.emit('STRATEGY_GETALL_BY_CONFIG', id);
 
     socket.on('CONFIG_GET_RES', handleConfigGetRes);
     socket.on('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
