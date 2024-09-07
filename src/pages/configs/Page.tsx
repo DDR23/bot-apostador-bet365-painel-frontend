@@ -54,6 +54,7 @@ export default function PageConfigs() {
     };
 
     socket.emit('CONFIG_GETALL');
+    
     socket.on('CONFIG_GETALL_RES', handleConfigsGetAllRes);
     socket.on('CONFIG_POST_RES', handleConfigPostRes);
     socket.on('CONFIG_PUT_RES', handleConfigPutRes);

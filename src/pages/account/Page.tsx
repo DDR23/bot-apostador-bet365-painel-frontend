@@ -10,7 +10,9 @@ import ModalDeleteConfig from "../../components/pages/configs/modals/ModalDelete
 import ModalEditConfig from "../../components/pages/configs/modals/ModalEditConfig";
 import ProviderInitBot from "../../utils/ProviderInitBot";
 import ProviderDevice from "../../utils/ProviderDevice";
-import ModalCreateStrategy from "../../components/pages/account/modals/ModalCreateStrategy";
+import { TypeStrategyTenis } from "../../types/TypeStrategyTenis";
+import CardStrategiesTenis from "../../components/pages/account/CardStrategiesTenis";
+import ModalCreateStrategyTenis from "../../components/pages/account/modals/ModalCreateStrategyTenis";
 
 export default function PageAccount() {
   const socket = GetSocket();
@@ -18,6 +20,7 @@ export default function PageAccount() {
   const { isDesktop } = ProviderDevice();
   const [opened, { open, close }] = useDisclosure(false);
   const [config, setConfig] = useState<TypeConfig>();
+  const [strategies, setStrategies] = useState<TypeStrategyTenis[]>([]);
   const [modalContent, setModalContent] = useState<'create' | 'edit' | 'delete' | ''>('');
 
   const handleOpen = (content: 'create' | 'edit' | 'delete') => {
@@ -31,6 +34,11 @@ export default function PageAccount() {
       setConfig(data);
     }
 
+    const handleStrategiesGetAllByConfigRes = (response: { data?: TypeStrategyTenis[] }) => {
+      const { data } = response;
+      setStrategies(data || [])
+    }
+
     const handleConfigPutRes = (respose: { data?: TypeConfig }) => {
       const { data } = respose;
       if (data === undefined) return;
@@ -38,20 +46,24 @@ export default function PageAccount() {
     }
 
     socket.emit('CONFIG_GET', id);
+    socket.emit('STRATEGY_GETALL_BY_CONFIG', config?._id);
+
     socket.on('CONFIG_GET_RES', handleConfigGetRes);
+    socket.on('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
     socket.on('CONFIG_PUT_RES', handleConfigPutRes);
     return () => {
       socket.off('CONFIG_GET_RES', handleConfigGetRes);
+      socket.off('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
       socket.off('CONFIG_PUT_RES', handleConfigPutRes);
     }
   }, [socket])
 
 
-  // const rows = configs.map((config, index) => (
-  //   <Grid.Col key={index} span={"content"}>
-  //     <CardStrategies config={config} />
-  //   </Grid.Col>
-  // ));
+  const rows = strategies.map((strategy, index) => (
+    <Grid.Col key={index} span={"content"}>
+      <CardStrategiesTenis strategy={strategy} />
+    </Grid.Col>
+  ));
 
   return (
     <>
@@ -101,7 +113,7 @@ export default function PageAccount() {
         </Paper>
         <Flex flex={1} py='md'>
           <Grid justify="center" >
-            {/* {configs.length > 0 ? rows : ''} */}
+            {strategies.length > 0 ? rows : ''}
             <Grid.Col span={"content"}>
               <Button variant="default" type="button" onClick={() => handleOpen('create')} radius="md" w={isDesktop ? '238' : '90vw'} h={isDesktop ? '309' : '120'}>
                 <Stack w='100%' h='100%' justify="center" align="center" gap={0}>
@@ -124,7 +136,7 @@ export default function PageAccount() {
           blur: 3
         }}
       >
-        {modalContent === 'create' && <ModalCreateStrategy configId={id} onClose={close} />}
+        {modalContent === 'create' && <ModalCreateStrategyTenis configId={id} onClose={close} />}
         {modalContent === 'edit' && <ModalEditConfig configId={id} onClose={close} />}
         {modalContent === 'delete' && <ModalDeleteConfig configId={id} onClose={close} />}
       </Modal>

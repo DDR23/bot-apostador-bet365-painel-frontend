@@ -14,7 +14,7 @@ interface Props {
   onClose: () => void;
 }
 
-export default function ModalCreateStrategy({ configId, onClose }: Props) {
+export default function ModalCreateStrategyTenis({ configId, onClose }: Props) {
   const socket = GetSocket();
   const { isDesktop } = ProviderDevice();
   const [isLoading, setIsLoading] = useState(false);
