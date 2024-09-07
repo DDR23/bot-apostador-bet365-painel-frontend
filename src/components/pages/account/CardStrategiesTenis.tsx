@@ -1,9 +1,9 @@
 import { ActionIcon, Card, Divider, Flex, Group, Modal, SimpleGrid, Stack, Text, Tooltip } from "@mantine/core";
 import { TypeStrategyTenis } from "../../../types/TypeStrategyTenis";
-import { IconEdit, IconTrash } from "@tabler/icons-react";
+import { IconTrash } from "@tabler/icons-react";
 import ProviderDevice from "../../../utils/ProviderDevice";
 import { useDisclosure } from "@mantine/hooks";
-import { useState } from "react";
+import ModalDeleteStrategyTenis from "./modals/ModalDeleteStrategyTenis";
 
 interface Props {
   strategy: TypeStrategyTenis
@@ -12,12 +12,6 @@ interface Props {
 export default function CardStrategiesTenis({ strategy }: Props) {
   const { isDesktop } = ProviderDevice();
   const [opened, { open, close }] = useDisclosure(false);
-  const [modalContent, setModalContent] = useState<'edit' | 'delete' | ''>('')
-
-  const handleOpen = (content: 'edit' | 'delete') => {
-    setModalContent(content);
-    open();
-  }
 
   return (
     <>
@@ -68,13 +62,8 @@ export default function CardStrategiesTenis({ strategy }: Props) {
           </Stack>
         </Card.Section>
         <Group mt="md" gap={10} justify="flex-end">
-          <Tooltip color="dimmed" label='Editar estratégia'>
-            <ActionIcon onClick={() => handleOpen('edit')} variant="default" size={36}>
-              <IconEdit size={20} />
-            </ActionIcon>
-          </Tooltip>
           <Tooltip color="dimmed" label='Deletar estrategia'>
-            <ActionIcon onClick={() => handleOpen('delete')} variant="default" c='#e03131' size={36}>
+            <ActionIcon onClick={open} variant="default" c='#e03131' size={36}>
               <IconTrash size={20} />
             </ActionIcon>
           </Tooltip>
@@ -89,9 +78,7 @@ export default function CardStrategiesTenis({ strategy }: Props) {
           blur: 3
         }}
       >
-        {modalContent === 'edit' && <>modal de edit</>}
-        {modalContent === 'delete' && <>modal de delete</>}
-        {/* <ModalDeleteConfig configId={config._id} onClose={close} /> */}
+        <ModalDeleteStrategyTenis strategy={strategy} onClose={close} />
       </Modal>
     </>
   );

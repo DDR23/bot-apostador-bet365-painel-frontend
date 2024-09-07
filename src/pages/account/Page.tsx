@@ -60,6 +60,15 @@ export default function PageAccount() {
       setConfig(data);
     }
 
+    const handleStrategyDelete = (response: { _id: string }) => {
+      const { _id } = response;
+      setStrategies(prevStrategies => {
+        const updatedStrategies = prevStrategies.filter(strategy => strategy._id !== _id);
+        return updatedStrategies;
+      })
+      socket.emit('CONFIG_GET', id);
+    }
+
     socket.emit('CONFIG_GET', id);
     socket.emit('STRATEGY_GETALL_BY_CONFIG', id);
 
@@ -67,15 +76,15 @@ export default function PageAccount() {
     socket.on('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
     socket.on('STRATEGY_POST_RES', handleStrategyPostRes)
     socket.on('CONFIG_PUT_RES', handleConfigPutRes);
+    socket.on('STRATEGY_DELETE_RES', handleStrategyDelete)
     return () => {
       socket.off('CONFIG_GET_RES', handleConfigGetRes);
       socket.off('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
       socket.off('STRATEGY_POST_RES', handleStrategyPostRes)
       socket.off('CONFIG_PUT_RES', handleConfigPutRes);
+      socket.off('STRATEGY_DELETE_RES', handleStrategyDelete)
     }
   }, [socket])
-
-  //TODO - deletar uma config nao ta apagando as estrategias dela
 
   const rows = strategies.map((strategy, index) => (
     <Grid.Col key={index} span={"content"}>

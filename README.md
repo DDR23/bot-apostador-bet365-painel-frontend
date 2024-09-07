@@ -13,3 +13,6 @@ O intuito desse projeto é monstar um frontend com as configurações minimas de
 - npm i
 - npm install @mantine/core @mantine/hooks @mantine/notifications react-router-dom socket.io-client react-hook-form @tabler/icons-react
 - npm install --save-dev postcss postcss-preset-mantine postcss-simple-vars
+
+
+<!-- TODO - apagar uma config nas faz o cascade -->
