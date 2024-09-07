@@ -5,6 +5,7 @@ import ModalDeleteConfig from './modals/ModalDeleteConfig';
 import { TypeConfig } from '../../../types/TypeConfig';
 import ProviderInitBot from '../../../utils/ProviderInitBot';
 import ProviderDevice from '../../../utils/ProviderDevice';
+import FormatPrice from '../../../utils/FormatPrice';
 
 interface Props {
   config: TypeConfig;
@@ -27,8 +28,8 @@ export function CardConfigs({ config }: Props) {
             <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>{config.CONFIG_STRATEGIES.length}</Text></Flex>
             <Flex align='center'><IconPlayerPlay size={20} /><Text fw={700} ml={5} inline>Início:</Text><Text inline ml={10}>{config.CONFIG_TIME_START}</Text></Flex>
             <Flex align='center'><IconPlayerPause size={20} /><Text fw={700} ml={5} inline>Final:</Text><Text inline ml={10}>{config.CONFIG_TIME_FINISH}</Text></Flex>
-            <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>{config.CONFIG_ENTRIES}</Text></Flex>
-            <Flex align='center'><IconCoins size={20} /><Text fw={700} ml={5} inline>Resultado:</Text><Text inline ml={10}>{config.CONFIG_RESULT}</Text></Flex>
+            <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>{FormatPrice(config.CONFIG_ENTRIES)}</Text></Flex>
+            <Flex align='center'><IconCoins size={20} /><Text fw={700} ml={5} inline>Resultado:</Text><Text inline ml={10}>{FormatPrice(config.CONFIG_RESULT)}</Text></Flex>
           </Stack>
         </Card.Section>
         <Group mt="md" gap={10}>

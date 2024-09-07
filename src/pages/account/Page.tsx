@@ -13,6 +13,7 @@ import ProviderDevice from "../../utils/ProviderDevice";
 import { TypeStrategyTenis } from "../../types/TypeStrategyTenis";
 import CardStrategiesTenis from "../../components/pages/account/CardStrategiesTenis";
 import ModalCreateStrategyTenis from "../../components/pages/account/modals/ModalCreateStrategyTenis";
+import FormatPrice from "../../utils/FormatPrice";
 
 export default function PageAccount() {
   const socket = GetSocket();
@@ -132,8 +133,8 @@ export default function PageAccount() {
             <Paper p='md'>
               <SimpleGrid cols={{ base: 1, xs: 3 }} spacing='sm'>
                 <Flex align='center'><IconAdjustmentsHorizontal size={20} /><Text fw={700} ml={5} inline>Estrategias:</Text><Text inline ml={10}>{config?.CONFIG_STRATEGIES.length}</Text></Flex>
-                <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>{config?.CONFIG_ENTRIES}</Text></Flex>
-                <Flex align='center'><IconCoins size={20} /><Text fw={700} ml={5} inline>Resultado:</Text><Text inline ml={10}>{config?.CONFIG_RESULT}</Text></Flex>
+                <Flex align='center'><IconCoin size={20} /><Text fw={700} ml={5} inline>Entradas:</Text><Text inline ml={10}>{FormatPrice(config?.CONFIG_ENTRIES)}</Text></Flex>
+                <Flex align='center'><IconCoins size={20} /><Text fw={700} ml={5} inline>Resultado:</Text><Text inline ml={10}>{FormatPrice(config?.CONFIG_RESULT)}</Text></Flex>
               </SimpleGrid>
             </Paper>
           </Stack>

@@ -4,6 +4,7 @@ import { IconTrash } from "@tabler/icons-react";
 import ProviderDevice from "../../../utils/ProviderDevice";
 import { useDisclosure } from "@mantine/hooks";
 import ModalDeleteStrategyTenis from "./modals/ModalDeleteStrategyTenis";
+import FormatPrice from "../../../utils/FormatPrice";
 
 interface Props {
   strategy: TypeStrategyTenis
@@ -51,13 +52,13 @@ export default function CardStrategiesTenis({ strategy }: Props) {
             <Text size="xs" c='dimmed'>ODD e valor da entrada</Text>
             <SimpleGrid cols={{ base: 2 }}>
               <Flex align='center'><Text fw={700} ml={5} c='dimmed' size="sm" inline>ODD:</Text><Text inline ml={10}>{strategy.STRATEGY_MULTIPLIER}</Text></Flex>
-              <Flex align='center'><Text fw={700} ml={5} c='dimmed' size="sm" inline>Entrada:</Text><Text inline ml={10}>{strategy.STRATEGY_ENTRY_VALUE}</Text></Flex>
+              <Flex align='center'><Text fw={700} ml={5} c='dimmed' size="sm" inline>Entrada:</Text><Text inline ml={10}>{FormatPrice(strategy.STRATEGY_ENTRY_VALUE)}</Text></Flex>
             </SimpleGrid>
             <Divider />
             <Text size="xs" c='dimmed'>Stops</Text>
             <SimpleGrid cols={{ base: 2 }}>
-              <Flex align='center'><Text fw={700} ml={5} c='dimmed' size="sm" inline>Loss:</Text><Text inline ml={10}>{strategy.STRATEGY_STOP ? strategy.STRATEGY_STOP_LOSS : '---'}</Text></Flex>
-              <Flex align='center'><Text fw={700} ml={5} c='dimmed' size="sm" inline>Win:</Text><Text inline ml={10}>{strategy.STRATEGY_STOP ? strategy.STRATEGY_STOP_WIN : '---'}</Text></Flex>
+              <Flex align='center'><Text fw={700} ml={5} c='dimmed' size="sm" inline>Loss:</Text><Text inline ml={10}>{strategy.STRATEGY_STOP ? `${strategy.STRATEGY_STOP_LOSS}%` : '---'}</Text></Flex>
+              <Flex align='center'><Text fw={700} ml={5} c='dimmed' size="sm" inline>Win:</Text><Text inline ml={10}>{strategy.STRATEGY_STOP ? `${strategy.STRATEGY_STOP_WIN}%` : '---'}</Text></Flex>
             </SimpleGrid>
           </Stack>
         </Card.Section>
