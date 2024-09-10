@@ -14,6 +14,7 @@ import { TypeStrategyTenis } from "../../types/TypeStrategyTenis";
 import CardStrategiesTenis from "../../components/pages/account/CardStrategiesTenis";
 import ModalCreateStrategyTenis from "../../components/pages/account/modals/ModalCreateStrategyTenis";
 import FormatPrice from "../../utils/FormatPrice";
+import ProviderStopBot from "../../utils/ProviderStopBot";
 
 export default function PageAccount() {
   const socket = GetSocket();
@@ -113,7 +114,9 @@ export default function PageAccount() {
               </SimpleGrid>
               <Divider my='md' />
               <Group mt="md" gap={10}>
-                <Button variant='filled' w='7rem' color={!config?.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }} onClick={() => ProviderInitBot(config!)}>
+                <Button variant='filled' w='7rem' color={!config?.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }} onClick={() => {
+                  !config?.CONFIG_STATUS ? ProviderInitBot(config!) : ProviderStopBot(config!)
+                }}>
                   {!config?.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
                 </Button>
                 <Tooltip color="dimmed" label='Editar configuração'>
@@ -122,7 +125,7 @@ export default function PageAccount() {
                   </ActionIcon>
                 </Tooltip>
                 <Tooltip color="dimmed" label='Deletar configuração'>
-                  <ActionIcon onClick={() => handleOpen('delete')} variant="default" c='#e03131' size={36}>
+                  <ActionIcon disabled={config?.CONFIG_STATUS} onClick={() => handleOpen('delete')} variant="default" c={config?.CONFIG_STATUS ? '#e0313150' : '#e03131'} size={36}>
                     <IconTrash size={20} />
                   </ActionIcon>
                 </Tooltip>
