@@ -1,6 +1,6 @@
 import { TypeConfig } from "../types/TypeConfig";
-import GetSocket from "./GetSocket";
-import ProviderNotification from "./ProviderNotification";
+import GetSocket from "../utils/GetSocket";
+import ProviderNotification from "../utils/ProviderNotification";
 
 export default function ProviderStopBot(config: TypeConfig) {
   const socket = GetSocket();

@@ -3,10 +3,10 @@ import { Card, Text, Group, Badge, Button, ActionIcon, Flex, Stack, Tooltip, Mod
 import { useDisclosure } from '@mantine/hooks';
 import ModalDeleteConfig from './modals/ModalDeleteConfig';
 import { TypeConfig } from '../../../types/TypeConfig';
-import ProviderInitBot from '../../../utils/ProviderInitBot';
+import ProviderInitBot from '../../../middleware/ProviderInitBot';
 import ProviderDevice from '../../../utils/ProviderDevice';
 import FormatPrice from '../../../utils/FormatPrice';
-import ProviderStopBot from '../../../utils/ProviderStopBot';
+import ProviderStopBot from '../../../middleware/ProviderStopBot';
 
 interface Props {
   config: TypeConfig;

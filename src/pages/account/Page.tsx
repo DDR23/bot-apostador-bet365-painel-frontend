@@ -8,13 +8,13 @@ import { useEffect, useState } from "react";
 import { TypeConfig } from "../../types/TypeConfig";
 import ModalDeleteConfig from "../../components/pages/configs/modals/ModalDeleteConfig";
 import ModalEditConfig from "../../components/pages/configs/modals/ModalEditConfig";
-import ProviderInitBot from "../../utils/ProviderInitBot";
+import ProviderInitBot from "../../middleware/ProviderInitBot";
 import ProviderDevice from "../../utils/ProviderDevice";
 import { TypeStrategyTenis } from "../../types/TypeStrategyTenis";
 import CardStrategiesTenis from "../../components/pages/account/CardStrategiesTenis";
 import ModalCreateStrategyTenis from "../../components/pages/account/modals/ModalCreateStrategyTenis";
 import FormatPrice from "../../utils/FormatPrice";
-import ProviderStopBot from "../../utils/ProviderStopBot";
+import ProviderStopBot from "../../middleware/ProviderStopBot";
 
 export default function PageAccount() {
   const socket = GetSocket();
