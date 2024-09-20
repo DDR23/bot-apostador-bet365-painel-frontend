@@ -15,14 +15,12 @@ export default function ProviderInitBot(config: TypeConfig) {
     }
 
     if (title === 'Sucesso') {
-      const handleEntryPostRes = (response: { title: string, message: string }) => {
-        const { title, message } = response;
-        ProviderNotification({ title, message });
-
-        socket.off('ENTRY_POST_RES', handleEntryPostRes);
-      };
-      socket.on('ENTRY_POST_RES', handleEntryPostRes);
-
+      // const handleEntryPostRes = (response: { title: string, message: string }) => {
+      //   const { title, message } = response;
+      //   ProviderNotification({ title, message });
+      //   socket.off('ENTRY_POST_RES', handleEntryPostRes);
+      // };
+      // socket.on('ENTRY_POST_RES', handleEntryPostRes);
       socket.emit('ENTRY_POST', data);
     }
 
