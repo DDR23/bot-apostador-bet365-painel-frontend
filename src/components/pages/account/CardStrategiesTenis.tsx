@@ -7,10 +7,11 @@ import ModalDeleteStrategyTenis from "./modals/ModalDeleteStrategyTenis";
 import FormatPrice from "../../../utils/FormatPrice";
 
 interface Props {
+  configStatus?: boolean;
   strategy: TypeStrategyTenis
 }
 
-export default function CardStrategiesTenis({ strategy }: Props) {
+export default function CardStrategiesTenis({ configStatus, strategy }: Props) {
   const { isDesktop } = ProviderDevice();
   const [opened, { open, close }] = useDisclosure(false);
 
@@ -64,7 +65,7 @@ export default function CardStrategiesTenis({ strategy }: Props) {
         </Card.Section>
         <Group mt="md" gap={10} justify="flex-end">
           <Tooltip color="dimmed" label='Deletar estrategia'>
-            <ActionIcon onClick={open} variant="default" c='#e03131' size={36}>
+            <ActionIcon disabled={configStatus} onClick={open} variant="default" c={configStatus ? '#e0313150' : '#e03131'} size={36}>
               <IconTrash size={20} />
             </ActionIcon>
           </Tooltip>

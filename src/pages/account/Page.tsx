@@ -107,7 +107,7 @@ export default function PageAccount() {
 
   const rows = strategies.map((strategy, index) => (
     <Grid.Col key={index} span={"content"}>
-      <CardStrategiesTenis strategy={strategy} />
+      <CardStrategiesTenis configStatus={config?.CONFIG_STATUS} strategy={strategy} />
     </Grid.Col>
   ));
 
@@ -137,7 +137,7 @@ export default function PageAccount() {
                   {!config?.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
                 </Button>
                 <Tooltip color="dimmed" label='Editar configuração'>
-                  <ActionIcon onClick={() => handleOpen('edit')} variant="default" size={36}>
+                  <ActionIcon disabled={config?.CONFIG_STATUS} onClick={() => handleOpen('edit')} variant="default" size={36}>
                     <IconEdit size={20} />
                   </ActionIcon>
                 </Tooltip>
