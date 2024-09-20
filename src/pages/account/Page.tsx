@@ -15,6 +15,7 @@ import CardStrategiesTenis from "../../components/pages/account/CardStrategiesTe
 import ModalCreateStrategyTenis from "../../components/pages/account/modals/ModalCreateStrategyTenis";
 import FormatPrice from "../../utils/FormatPrice";
 import ProviderStopBot from "../../middleware/ProviderStopBot";
+import ProviderNotification from "../../utils/ProviderNotification";
 
 export default function PageAccount() {
   const socket = GetSocket();
@@ -71,20 +72,36 @@ export default function PageAccount() {
       socket.emit('CONFIG_GET', id);
     }
 
+    // OUVE REPOSTA DE INÍCIO
+    const handleScraperStartResOn = (response: { title: string, message: string }) => {
+      const { title, message } = response;
+      ProviderNotification({ title, message });
+    };
+    
+    // OUVE RESPOSTA DE TÉRMINO
+    const handleScraperStartResOff = (response: { title: string, message: string }) => {
+      const { title, message } = response;
+      ProviderNotification({ title, message });
+    };
+    
     socket.emit('CONFIG_GET', id);
     socket.emit('STRATEGY_GETALL_BY_CONFIG', id);
 
     socket.on('CONFIG_GET_RES', handleConfigGetRes);
     socket.on('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
-    socket.on('STRATEGY_POST_RES', handleStrategyPostRes)
+    socket.on('STRATEGY_POST_RES', handleStrategyPostRes);
     socket.on('CONFIG_PUT_RES', handleConfigPutRes);
-    socket.on('STRATEGY_DELETE_RES', handleStrategyDelete)
+    socket.on('STRATEGY_DELETE_RES', handleStrategyDelete);
+    socket.on('SCRAPER_START_RES_ON', handleScraperStartResOn);
+    socket.on('SCRAPER_START_RES_OFF', handleScraperStartResOff);
     return () => {
       socket.off('CONFIG_GET_RES', handleConfigGetRes);
       socket.off('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
-      socket.off('STRATEGY_POST_RES', handleStrategyPostRes)
+      socket.off('STRATEGY_POST_RES', handleStrategyPostRes);
       socket.off('CONFIG_PUT_RES', handleConfigPutRes);
-      socket.off('STRATEGY_DELETE_RES', handleStrategyDelete)
+      socket.off('STRATEGY_DELETE_RES', handleStrategyDelete);
+      socket.off('SCRAPER_START_RES_ON', handleScraperStartResOn);
+      socket.off('SCRAPER_START_RES_OFF', handleScraperStartResOff);
     }
   }, [socket])
 

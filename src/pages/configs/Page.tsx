@@ -7,6 +7,7 @@ import GetSocket from "../../utils/GetSocket";
 import { TypeConfig } from "../../types/TypeConfig";
 import { CardConfigs } from "../../components/pages/configs/CardConfigs";
 import ProviderDevice from "../../utils/ProviderDevice";
+import ProviderNotification from "../../utils/ProviderNotification";
 
 export default function PageConfigs() {
   const socket = GetSocket();
@@ -36,9 +37,10 @@ export default function PageConfigs() {
 
     const handleConfigPutRes = (response: { data?: TypeConfig }) => {
       const { data } = response;
+      console.log(data)
       if (data) {
-        setConfigs(prevConfigs => 
-          prevConfigs.map(config => 
+        setConfigs(prevConfigs =>
+          prevConfigs.map(config =>
             config._id === data._id ? data : config
           )
         );
@@ -53,18 +55,34 @@ export default function PageConfigs() {
       });
     };
 
+    // OUVE REPOSTA DE INÍCIO
+    const handleScraperStartResOn = (response: { title: string, message: string }) => {
+      const { title, message } = response;
+      ProviderNotification({ title, message });
+    };
+
+    // OUVE RESPOSTA DE TÉRMINO
+    const handleScraperStartResOff = (response: { title: string, message: string }) => {
+      const { title, message } = response;
+      ProviderNotification({ title, message });
+    };
+
     socket.emit('CONFIG_GETALL');
-    
+
     socket.on('CONFIG_GETALL_RES', handleConfigsGetAllRes);
     socket.on('CONFIG_POST_RES', handleConfigPostRes);
     socket.on('CONFIG_PUT_RES', handleConfigPutRes);
     socket.on('CONFIG_DELETE_RES', handleConfigDeleteRes);
-    
+    socket.on('SCRAPER_START_RES_ON', handleScraperStartResOn);
+    socket.on('SCRAPER_START_RES_OFF', handleScraperStartResOff);
+
     return () => {
       socket.off('CONFIG_GETALL_RES', handleConfigsGetAllRes);
       socket.off('CONFIG_POST_RES', handleConfigPostRes);
       socket.off('CONFIG_PUT_RES', handleConfigPutRes);
       socket.off('CONFIG_DELETE_RES', handleConfigDeleteRes);
+      socket.off('SCRAPER_START_RES_ON', handleScraperStartResOn);
+      socket.off('SCRAPER_START_RES_OFF', handleScraperStartResOff);
     };
   }, [socket]);
 

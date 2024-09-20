@@ -7,9 +7,11 @@ export default function ProviderStopBot(config: TypeConfig) {
 
   const handleConfigPutRes = (response: { title: string, message: string, data: TypeConfig }) => {
     const { title, message, data } = response;
-    console.log('bot parado', data)
-    if (title === 'Erro') ProviderNotification({ title, message })
-    ProviderNotification({ title, message: 'Bot foi parado!' });
+    
+    if (title === 'Erro') {
+      ProviderNotification({ title, message });
+      return;
+    }
 
     // if (title === 'Sucesso') {
     //   const handleEntryPostRes = (response: { title: string, message: string }) => {

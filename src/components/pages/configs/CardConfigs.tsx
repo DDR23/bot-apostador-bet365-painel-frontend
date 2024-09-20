@@ -35,8 +35,8 @@ export function CardConfigs({ config }: Props) {
         </Card.Section>
         <Group mt="md" gap={10}>
           <Button variant='filled' w='7rem' color={!config.CONFIG_STATUS ? 'green' : 'red'} style={{ flex: 1 }} onClick={() => {
-                  !config?.CONFIG_STATUS ? ProviderInitBot(config!) : ProviderStopBot(config!)
-                }}>
+            !config?.CONFIG_STATUS ? ProviderInitBot(config!) : ProviderStopBot(config!)
+          }}>
             {!config.CONFIG_STATUS ? 'Iniciar' : 'Parar'}
           </Button>
           <Tooltip color="dimmed" label='Detalhes da configuração'>
