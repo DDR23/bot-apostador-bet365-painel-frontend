@@ -83,6 +83,12 @@ export default function PageAccount() {
       const { title, message } = response;
       ProviderNotification({ title, message });
     };
+
+    // OUVE RESPOSTA DE PARADA
+    const handleScraperStopRes = (response: { title: string, message: string }) => {
+      const { title, message } = response;
+      ProviderNotification({ title, message });
+    };
     
     socket.emit('CONFIG_GET', id);
     socket.emit('STRATEGY_GETALL_BY_CONFIG', id);
@@ -94,6 +100,7 @@ export default function PageAccount() {
     socket.on('STRATEGY_DELETE_RES', handleStrategyDelete);
     socket.on('SCRAPER_START_RES_ON', handleScraperStartResOn);
     socket.on('SCRAPER_START_RES_OFF', handleScraperStartResOff);
+    socket.on('SCRAPER_STOP_RES', handleScraperStopRes);
     return () => {
       socket.off('CONFIG_GET_RES', handleConfigGetRes);
       socket.off('STRATEGY_GETALL_BY_CONFIG_RES', handleStrategiesGetAllByConfigRes);
@@ -102,6 +109,7 @@ export default function PageAccount() {
       socket.off('STRATEGY_DELETE_RES', handleStrategyDelete);
       socket.off('SCRAPER_START_RES_ON', handleScraperStartResOn);
       socket.off('SCRAPER_START_RES_OFF', handleScraperStartResOff);
+      socket.off('SCRAPER_STOP_RES', handleScraperStopRes);
     }
   }, [socket])
 

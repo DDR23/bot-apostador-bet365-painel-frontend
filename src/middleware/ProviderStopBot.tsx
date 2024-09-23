@@ -15,19 +15,3 @@ export default function ProviderStopBot(config: TypeConfig) {
 
   socket.emit('CONFIG_PUT', config._id, { CONFIG_STATUS: false });
 }
-
-
-
-
-
-
-
-// ESSA PARTE DE BAIXO DEVE SER OUVIDA NAS PAGES
-
-//   const handleEntryPostRes = (response: { title: string, message: string }) => {
-//     const { title, message } = response;
-//     ProviderNotification({ title, message });
-
-//     socket.off('ENTRY_POST_RES', handleEntryPostRes);
-//   };
-//   socket.on('ENTRY_POST_RES', handleEntryPostRes);

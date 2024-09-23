@@ -67,6 +67,12 @@ export default function PageConfigs() {
       ProviderNotification({ title, message });
     };
 
+    // OUVE RESPOSTA DE PARADA
+    const handleScraperStopRes = (response: { title: string, message: string }) => {
+      const { title, message } = response;
+      ProviderNotification({ title, message });
+    };
+
     socket.emit('CONFIG_GETALL');
 
     socket.on('CONFIG_GETALL_RES', handleConfigsGetAllRes);
@@ -75,6 +81,7 @@ export default function PageConfigs() {
     socket.on('CONFIG_DELETE_RES', handleConfigDeleteRes);
     socket.on('SCRAPER_START_RES_ON', handleScraperStartResOn);
     socket.on('SCRAPER_START_RES_OFF', handleScraperStartResOff);
+    socket.on('SCRAPER_STOP_RES', handleScraperStopRes);
 
     return () => {
       socket.off('CONFIG_GETALL_RES', handleConfigsGetAllRes);
@@ -83,6 +90,7 @@ export default function PageConfigs() {
       socket.off('CONFIG_DELETE_RES', handleConfigDeleteRes);
       socket.off('SCRAPER_START_RES_ON', handleScraperStartResOn);
       socket.off('SCRAPER_START_RES_OFF', handleScraperStartResOff);
+      socket.off('SCRAPER_STOP_RES', handleScraperStopRes);
     };
   }, [socket]);
 
