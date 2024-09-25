@@ -128,7 +128,8 @@ export default function PageAccount() {
         <Paper withBorder p='sm' w='90vw' style={{ backgroundColor: 'Background' }}>
           <Stack gap='sm'>
             <Paper p='md'>
-              <Group justify="flex-end" mb='sm'>
+              <Group justify="space-between" mb='sm'>
+                <Text fz='xs' c='dimmed'>ID: {config?._id}</Text>
                 <Badge variant="dot" color={config?.CONFIG_STATUS ? 'green' : 'red'}>{config?.CONFIG_STATUS ? 'On' : 'Off'}</Badge>
               </Group>
               <SimpleGrid cols={{ base: 1, xs: 2 }} spacing='sm'>

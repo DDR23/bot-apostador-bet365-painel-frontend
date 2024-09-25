@@ -20,7 +20,8 @@ export function CardConfigs({ config }: Props) {
     <>
       <Card withBorder radius="md" p="md" bg='none' w={isDesktop ? '238' : '90vw'}>
         <Card.Section withBorder p='sm'>
-          <Group justify="flex-end" mb='sm'>
+          <Group justify="space-between" mb='sm'>
+            <Text fz='xs' c='dimmed'>ID: {config._id}</Text>
             <Badge variant="dot" color={config.CONFIG_STATUS ? 'green' : 'red'}>{config.CONFIG_STATUS ? 'on' : 'off'}</Badge>
           </Group>
           <Stack gap={7}>
