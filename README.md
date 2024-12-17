@@ -1,4 +1,4 @@
-# bot-apostador-painel-frontend
+# bot-apostador-bet365-painel-frontend
 
 Esse repositório foi criado e desenvolvido para o frontend de um bot de apostas esportivas, sendo esse o painel responsavel registrar as configurações de apostas que o scrapper deve usar para comprar com os jogos ao vivo.
 
