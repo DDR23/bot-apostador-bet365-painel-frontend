@@ -1,6 +1,6 @@
-# atividade---frontend---meu-primeiro-socket---others
+# bot-apostador-painel-frontend
 
-O intuito desse projeto é monstar um frontend com as configurações minimas de conexão de troca de informações usando websocket, que servirá de base para os proximos projetos que usem desta mesma tecnologia.
+Esse repositório foi criado e desenvolvido para o frontend de um bot de apostas esportivas, sendo esse o painel responsavel registrar as configurações de apostas que o scrapper deve usar para comprar com os jogos ao vivo.
 
 ## Ambiente de Desenvolvimento
 
@@ -13,5 +13,3 @@ O intuito desse projeto é monstar um frontend com as configurações minimas de
 - npm i
 - npm install @mantine/core @mantine/hooks @mantine/notifications react-router-dom socket.io-client react-hook-form @tabler/icons-react
 - npm install --save-dev postcss postcss-preset-mantine postcss-simple-vars
-
-<!-- TODO - desenvolver função de login, e navegar ate a pagina de tenis de mesa -->
