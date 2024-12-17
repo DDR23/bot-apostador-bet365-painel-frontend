@@ -1,15 +1,6 @@
 # bot-apostador-bet365-painel-frontend
 
-Esse repositório foi criado e desenvolvido para o frontend de um bot de apostas esportivas, sendo esse o painel responsavel registrar as configurações de apostas que o scrapper deve usar para comprar com os jogos ao vivo.
+## Sobre o projeto
+esse projeto se trata de um bot de apostas, usa tecnologias como WebSocket e Scrapping com PlayWright para automatizao de todo o fluxo, desde a leitura dos jogos ao vivo, comparação dos parametros de entrada para cada partida, entrada, paradas por stop ou tempo de atividade e analise. este projeto é divido em tres partes, esse frontend para o gerenciamento e adição de configurações, um backend central responsavel pela logica de armazenamento e comunicação/ponte entre as partes, e um backend responsavel exclusivamente para gestao e automação do bot.
 
-## Ambiente de Desenvolvimento
-
-- **node** v20.17.0
-- **npm** v10.8.2
-
-## Etapas de Desenvolvimento 🎯
-
-- npm create vite@latest
-- npm i
-- npm install @mantine/core @mantine/hooks @mantine/notifications react-router-dom socket.io-client react-hook-form @tabler/icons-react
-- npm install --save-dev postcss postcss-preset-mantine postcss-simple-vars
+OBS: este projeto foi descontinuado/pausado por tempo indeterminado
